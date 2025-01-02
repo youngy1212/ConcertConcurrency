@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TokenController {
 
     @PostMapping("/tokens")
-    public ApiResponse<TokenResponse> d(@RequestBody TokenRequest request){
+    public ApiResponse<TokenResponse> Servicetoken(@RequestBody TokenRequest request){
         return ApiResponse.ok(TokenResponse.of("uuid", LocalDateTime.now(),true));
     }
 
