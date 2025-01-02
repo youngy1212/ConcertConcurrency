@@ -135,7 +135,7 @@
 ### Request
 
 - Method: POST
-- URL: `/concert/setas`
+- URL: `/concert/seats`
 - Headers:
     - `Content-Type`: application/json
 - Request Body:
