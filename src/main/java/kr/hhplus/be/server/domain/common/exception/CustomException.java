@@ -28,4 +28,10 @@ public class CustomException extends RuntimeException {
         this.errorCode = HttpStatus.BAD_REQUEST.value();// 기본값 설정
     }
 
+    public CustomException() {
+        super("잘못된 요청입니다.");
+        this.httpStatus = HttpStatus.BAD_REQUEST;
+        this.errorCode = HttpStatus.BAD_REQUEST.value();
+    }
+
 }
