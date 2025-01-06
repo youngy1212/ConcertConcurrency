@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
         HttpStatus status = ex.getHttpStatus();
 
         ErrorResponse errorResponse = new ErrorResponse(
-                ex.getCode(),
+                ex.getErrorCode(),
                 status.getReasonPhrase(),
                 ex.getMessage()
         );
