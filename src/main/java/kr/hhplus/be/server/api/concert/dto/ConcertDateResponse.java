@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.api.concert.dto;
 
 import java.time.LocalDateTime;
+import kr.hhplus.be.server.domain.concert.ConcertSchedule;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,10 +18,10 @@ public class ConcertDateResponse {
         this.concert_date = concert_date;
     }
 
-    public static ConcertDateResponse of(Long concert_id, LocalDateTime concert_date) {
+    public static ConcertDateResponse of(ConcertSchedule concertSchedule) {
         return ConcertDateResponse.builder()
-                .concert_id(concert_id)
-                .concert_date(concert_date).build();
+                .concert_id(concertSchedule.getId())
+                .concert_date(concertSchedule.getConcertDate()).build();
 
     }
 }

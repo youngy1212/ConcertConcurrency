@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDateTime;
 import kr.hhplus.be.server.domain.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,18 +23,18 @@ public class Concert extends BaseEntity {
 
     private String title;
 
-    private LocalDateTime concertDate;
+    private String place;
 
     @Builder
-    private Concert(String title, LocalDateTime concertDate) {
+    private Concert(String title, String place) {
         this.title = title;
-        this.concertDate = concertDate;
+        this.place = place;
     }
 
-    public static Concert create(String title, LocalDateTime concertDate) {
+    public static Concert create(String title, String place) {
         return Concert.builder()
                 .title(title)
-                .concertDate(concertDate).build();
+                .place(place).build();
     }
 
 }
