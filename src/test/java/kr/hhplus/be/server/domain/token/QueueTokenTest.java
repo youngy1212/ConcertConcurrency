@@ -19,7 +19,7 @@ class QueueTokenTest {
     void testTokenActive() {
         // given
         User user = User.create("유저1", "이메일");
-        Concert concert = Concert.create("콘서트 이름", LocalDateTime.now());
+        Concert concert = Concert.create("콘서트 이름", "고척돔");
         QueueToken queueToken = QueueToken.create(user, concert);
         LocalDateTime now = LocalDateTime.now();
 
@@ -37,7 +37,7 @@ class QueueTokenTest {
     void testTokenActive_AlreadyActive() {
         // given
         User user = User.create("유저1", "이메일");
-        Concert concert = Concert.create("콘서트 이름", LocalDateTime.now());
+        Concert concert = Concert.create("콘서트 이름", "고척돔");
         QueueToken queueToken = QueueToken.create( user, concert);
         LocalDateTime now = LocalDateTime.now();
         queueToken.tokenActive(now);
@@ -53,7 +53,7 @@ class QueueTokenTest {
     void testIsExpired_BeforeNow() {
         // given
         User user = User.create("유저1", "이메일");
-        Concert concert = Concert.create("콘서트 이름", LocalDateTime.now());
+        Concert concert = Concert.create("콘서트 이름", "올림픽홀");
         QueueToken queueToken = QueueToken.create( user, concert);
         LocalDateTime now = LocalDateTime.now().minusMonths(10);
         queueToken.tokenActive(now);
@@ -70,7 +70,7 @@ class QueueTokenTest {
     void testIsExpired_afterNow() {
         // given
         User user = User.create("유저1", "이메일");
-        Concert concert = Concert.create("콘서트 이름", LocalDateTime.now());
+        Concert concert = Concert.create("콘서트 이름", "올림픽홀");
         QueueToken queueToken = QueueToken.create(user, concert);
         LocalDateTime now = LocalDateTime.now();
         queueToken.tokenActive(now);

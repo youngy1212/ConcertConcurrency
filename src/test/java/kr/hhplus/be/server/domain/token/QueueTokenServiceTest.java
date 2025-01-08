@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
 import kr.hhplus.be.server.domain.concert.Concert;
 import kr.hhplus.be.server.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +28,7 @@ class QueueTokenServiceTest {
     void issueToken_ShouldReturnQueueToken() {
         // given
         User user = User.create("유저이름", "email.com");
-        Concert concert = Concert.create("공연", LocalDateTime.now());
+        Concert concert = Concert.create("공연", "고척돔");
         QueueToken queueToken = QueueToken.create(user,concert);
 
         when(queueTokenStore.save(any(QueueToken.class))).thenReturn(queueToken);
