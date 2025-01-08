@@ -1,7 +1,9 @@
 package kr.hhplus.be.server.api.concert.dto;
 
 import java.util.List;
+import lombok.Getter;
 
+@Getter
 public class SeatResponse {
 
     private List<Long> seat_ids;
@@ -12,6 +14,5 @@ public class SeatResponse {
 
     public static SeatResponse of(List<Long> seat_ids) {
         return new SeatResponse(seat_ids);
-
     }
 }

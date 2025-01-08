@@ -8,4 +8,6 @@ public interface ConcertReader {
     Optional<Concert> findById(final long id);
 
     List<ConcertSchedule> findByConcertId(long concertId);
+
+    List<Long> findByConcertScheduleId(long concertScheduleId);
 }
