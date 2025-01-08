@@ -14,6 +14,7 @@ public class ConcertReadImpl implements ConcertReader {
 
     private final ConcertJpaRepository concertJpaRepository;
     private final ConcertScheduleJpaRepository concertScheduleJpaRepository;
+    private final SeatJpaRepository seatJpaRepository;
 
     @Override
     public Optional<Concert> findById(final long id) {
@@ -23,5 +24,10 @@ public class ConcertReadImpl implements ConcertReader {
     @Override
     public List<ConcertSchedule> findByConcertId(long concertId) {
         return concertScheduleJpaRepository.findAllByConcertId(concertId);
+    }
+
+    @Override
+    public List<Long> findByConcertScheduleId(long concertScheduleId) {
+        return seatJpaRepository.findByConcertScheduleId(concertScheduleId);
     }
 }
