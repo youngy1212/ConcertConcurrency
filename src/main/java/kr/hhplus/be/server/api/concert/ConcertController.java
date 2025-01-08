@@ -1,6 +1,5 @@
 package kr.hhplus.be.server.api.concert;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import kr.hhplus.be.server.api.concert.dto.ConcertDateResponse;
 import kr.hhplus.be.server.api.concert.dto.SeatRequest;
@@ -17,8 +16,7 @@ public class ConcertController {
 
     @GetMapping("/concert/date/{concertId}")
     public ResponseEntity<List<ConcertDateResponse>> getConcertDates(@PathVariable Long concertId){
-        return ResponseEntity.ok(List.of(ConcertDateResponse.of(1L, LocalDateTime.now()),
-                ConcertDateResponse.of(2L, LocalDateTime.now())));
+        return ResponseEntity.ok(List.of());
     }
 
     @PostMapping("/concert/seats")
