@@ -25,7 +25,7 @@ class ConcertServiceTest {
     @Test
     void concertNotFound() {
         // given
-        Long concertId = 1L;
+        long concertId = 1L;
 
         //  when && then
         when(concertReader.findById(concertId)).thenReturn(Optional.empty());

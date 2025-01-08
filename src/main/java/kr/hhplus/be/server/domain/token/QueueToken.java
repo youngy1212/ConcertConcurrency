@@ -50,16 +50,21 @@ public class QueueToken extends BaseEntity {
 
     private LocalDateTime expiresAt;
 
+    private LocalDateTime enqueuedAt; //대기열에 진입하는 시간
+
     @Enumerated(EnumType.STRING)
     private QueueTokenStatus status;
 
+
     @Builder
-    private QueueToken(String queueTokenId, User user, Concert concert,LocalDateTime expiresAt,
+    public QueueToken(String queueTokenId, User user, Concert concert, LocalDateTime expiresAt,
+                      LocalDateTime enqueuedAt,
                       QueueTokenStatus status) {
         this.queueTokenId = queueTokenId;
         this.user = user;
         this.concert = concert;
         this.expiresAt = expiresAt;
+        this.enqueuedAt = enqueuedAt;
         this.status = status;
     }
 
@@ -68,6 +73,7 @@ public class QueueToken extends BaseEntity {
                 .queueTokenId(UUID.randomUUID().toString())
                 .user(user)
                 .concert(concert)
+                .enqueuedAt(LocalDateTime.now())
                 .status(QueueTokenStatus.PENDING)
                 .build();
     }
