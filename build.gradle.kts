@@ -37,9 +37,14 @@ dependencies {
 
 	//lombok
 	implementation("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
+	testAnnotationProcessor("org.projectlombok:lombok")
 
 	// DB
 	runtimeOnly("com.mysql:mysql-connector-j")
+
+	// swagger
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
