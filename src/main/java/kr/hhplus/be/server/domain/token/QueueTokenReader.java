@@ -8,4 +8,6 @@ public interface QueueTokenReader {
     List<QueueToken> findTopNOrderByEnqueuedAt(QueueTokenStatus queueTokenStatus, int count);
 
     Optional<QueueToken> tokenFindById(String token);
+
+    Optional<QueueToken> findByUserAndConcert(Long user, Long concert);
 }

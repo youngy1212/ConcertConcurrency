@@ -1,5 +1,6 @@
 package kr.hhplus.be.server.domain.token;
 
+import java.util.Optional;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.Concert;
 import kr.hhplus.be.server.domain.user.User;
@@ -31,5 +32,10 @@ public class QueueTokenService {
             throw new CustomException("대기시간이 만료되었습니다.");
         }
 
+
+    }
+
+    public Optional<QueueToken> findByUserAndConcert(Long userId, Long concertId) {
+        return queueTokenReader.findByUserAndConcert(userId, concertId);
     }
 }
