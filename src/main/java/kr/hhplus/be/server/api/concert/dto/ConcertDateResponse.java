@@ -11,21 +11,21 @@ import lombok.Getter;
 public class ConcertDateResponse {
 
     @Schema( description = "콘서트 ID")
-    private final Long concert_id;
+    private final Long ConcertScheduleId;
 
     @Schema(description = "콘서트 날짜")
-    private final LocalDateTime concert_date;
+    private final LocalDateTime concertDate;
 
     @Builder
-    private ConcertDateResponse(Long concert_id, LocalDateTime concert_date) {
-        this.concert_id = concert_id;
-        this.concert_date = concert_date;
+    private ConcertDateResponse(Long ConcertScheduleId, LocalDateTime concertDate) {
+        this.ConcertScheduleId = ConcertScheduleId;
+        this.concertDate = concertDate;
     }
 
     public static ConcertDateResponse of(ConcertSchedule concertSchedule) {
         return ConcertDateResponse.builder()
-                .concert_id(concertSchedule.getId())
-                .concert_date(concertSchedule.getConcertDate()).build();
+                .ConcertScheduleId(concertSchedule.getId())
+                .concertDate(concertSchedule.getConcertDate()).build();
 
     }
 }
