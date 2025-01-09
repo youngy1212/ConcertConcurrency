@@ -42,8 +42,8 @@ public class ConcertService {
         return SeatResponse.of(seatIds);
     }
 
-    public Seat getSeat(final long seatId) {
-        return concertReader.findBySeatId(seatId).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND,"콘서트의 좌석을 찾을 수 없습니다."));
+    public Seat findByIdLock(final long seatId) {
+        return concertReader.findByIdLock(seatId).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND,"콘서트의 좌석을 찾을 수 없습니다."));
     }
 
     public ConcertSchedule getConcertSchedule(final long concertScheduleId){
