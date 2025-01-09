@@ -14,10 +14,11 @@ public class ReservationService {
 
     private final ReservationStore reservationStore;
 
-    public TemporaryReservation createTemporaryReservation(ConcertSchedule concertSchedule, User user, Seat seat,LocalDateTime expiresAt, String queueTokenId) {
+    public TemporaryReservation createTemporaryReservation(ConcertSchedule concertSchedule, User user, Seat seat, String queueTokenId) {
 
+        LocalDateTime time = LocalDateTime.now().plusMinutes(10); //좌석은 10분간 유효
         // 임시 예약 생성
-        TemporaryReservation tempReservation = TemporaryReservation.create(concertSchedule, user, seat, expiresAt, queueTokenId);
+        TemporaryReservation tempReservation = TemporaryReservation.create(concertSchedule, user, seat, time,queueTokenId);
 
         return reservationStore.temporaryReservationSave(tempReservation);
     }

@@ -45,13 +45,12 @@ class ReservationServiceTest {
 
         // when
         TemporaryReservation result = reservationService.createTemporaryReservation(concertSchedule,
-                user, seat, expiresAt, queueToken);
+                user, seat, queueToken);
 
         // then
         assertEquals(result.getUser().getName(), user.getName());
         assertEquals(result.getConcertSchedule().getConcertDate(), concertSchedule.getConcertDate());
         assertEquals(result.getSeat().getSeatNumber(), seat.getSeatNumber());
-        assertEquals(result.getExpiresAt(), expiresAt);
         assertEquals(result.getQueueTokenId(), queueToken);
         verify(reservationStore).temporaryReservationSave(any(TemporaryReservation.class));
 
