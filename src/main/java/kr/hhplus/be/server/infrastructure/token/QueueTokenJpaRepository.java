@@ -7,8 +7,10 @@ import kr.hhplus.be.server.domain.token.QueueTokenStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 
-public interface QueueTokenJpaRepository extends JpaRepository<QueueToken, Long> {
+public interface QueueTokenJpaRepository extends JpaRepository<QueueToken, String> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<QueueToken> findTop10ByStatusOrderByEnqueuedAtAsc(QueueTokenStatus status);
+
+
 }
