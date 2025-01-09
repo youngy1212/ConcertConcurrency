@@ -33,8 +33,8 @@ public class ConcertReadImpl implements ConcertReader {
     }
 
     @Override
-    public Optional<Seat> findBySeatId(long seatId) {
-        return seatJpaRepository.findById(seatId);
+    public Optional<Seat> findByIdLock(long seatId) {
+        return seatJpaRepository.findByIdLock(seatId);
     }
 
     @Override

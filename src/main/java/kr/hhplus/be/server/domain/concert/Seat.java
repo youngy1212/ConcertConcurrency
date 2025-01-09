@@ -77,5 +77,13 @@ public class Seat extends BaseEntity {
         this.status = SeatStatus.BOOKED;
     }
 
+    //예약 진행
+    public void pending() {
+        if (this.status != SeatStatus.AVAILABLE) {
+            throw new CustomException(HttpStatus.CONFLICT, "해당 좌석은 선택할 수 없습니다.");
+        }
+        this.status = SeatStatus.PENDING;
+    }
+
 
 }

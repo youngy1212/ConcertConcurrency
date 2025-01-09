@@ -42,6 +42,9 @@ class ReservationFacadeTest {
     private ReservationFacade reservationFacade;
 
     @Autowired
+    private PaymentFacade paymentFacade;
+
+    @Autowired
     private UserJpaRepository UserJpaRepository;
 
     @Autowired
@@ -180,7 +183,7 @@ class ReservationFacadeTest {
 
 
         // When
-        ReservationResponse reservationResponse = reservationFacade.completeReservation(
+        ReservationResponse reservationResponse = paymentFacade.completeReservation(
                 saveUse.getId(), concert.getId(), seat.getSeatId() , queueToken.getQueueTokenId(), tempReservation.getId(),payData);
 
 
@@ -207,7 +210,7 @@ class ReservationFacadeTest {
 
 
         // when //then
-        assertThatThrownBy(()-> reservationFacade.completeReservation(saveUse.getId(), concert.getId(), seat2.getSeatId(), queueToken.getQueueTokenId(), tempReservation.getId(),payData))
+        assertThatThrownBy(()-> paymentFacade.completeReservation(saveUse.getId(), concert.getId(), seat2.getSeatId(), queueToken.getQueueTokenId(), tempReservation.getId(),payData))
                 .isInstanceOf(CustomException.class)
                 .hasMessage("예약 정보가 일치하지 않습니다.");
 
@@ -231,7 +234,7 @@ class ReservationFacadeTest {
 
 
         // when //then
-        assertThatThrownBy(()-> reservationFacade.completeReservation(user.getId(), concert.getId(), seat.getSeatId(), queueToken.getQueueTokenId(), tempReservation.getId(),payData))
+        assertThatThrownBy(()-> paymentFacade.completeReservation(user.getId(), concert.getId(), seat.getSeatId(), queueToken.getQueueTokenId(), tempReservation.getId(),payData))
                 .isInstanceOf(CustomException.class)
                 .hasMessage("예약 정보가 일치하지 않습니다.");
 
