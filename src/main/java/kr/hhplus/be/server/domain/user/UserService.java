@@ -16,4 +16,21 @@ public class UserService {
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."));
     }
 
+    public Point chargePoint(Long userId, Long amount) {
+
+        if (amount == null || amount <= 0) {
+            throw new CustomException("잘못 청구되었습니다.");
+        }
+
+        Point point = userReader.findByPoint(userId).orElseThrow(() -> new CustomException("포인트를 찾을 수 없습니다."));;
+        point.charge(amount);
+
+        return point;
+
+    }
+
+    public Point getPoint(Long userId) {
+        return userReader.findByPoint(userId).orElseThrow(() -> new CustomException("포인트를 찾을 수 없습니다."));
+    }
+
 }

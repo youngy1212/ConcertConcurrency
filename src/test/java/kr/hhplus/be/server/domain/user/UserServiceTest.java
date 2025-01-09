@@ -36,4 +36,51 @@ class UserServiceTest {
 
     }
 
+    @DisplayName("잘못된 금액으로 충전에 실패합니다.")
+    @Test
+    void ChargePointInvalidAmount() {
+        // given
+        Long userId = 1L;
+        Long invalidAmount = 0L;
+
+        // when // then
+        assertThatThrownBy(()-> userService.chargePoint(userId, invalidAmount  ))
+                .isInstanceOf(CustomException.class)
+                .hasMessage("잘못 청구되었습니다.");
+
+    }
+
+    @DisplayName("충전할 포인트를 찾을 수 없습니다.")
+    @Test
+    void ChargePointNotFound() {
+        // given
+        Long userId = 1L;
+
+        // when
+        when(userReader.findByPoint(userId)).thenReturn(Optional.empty());
+
+        // then
+        assertThatThrownBy(()-> userService.chargePoint(userId,1000L  ))
+                .isInstanceOf(CustomException.class)
+                .hasMessage("포인트를 찾을 수 없습니다.");
+
+    }
+
+
+    @DisplayName("포인트 조회시 포인트 데이터가 없어서 실패")
+    @Test
+    void getPointNotFound() {
+        // given
+        Long userId = 1L;
+
+        // when
+        when(userReader.findByPoint(userId)).thenReturn(Optional.empty());
+
+        //then
+        assertThatThrownBy(()-> userService.getPoint(userId ))
+                .isInstanceOf(CustomException.class)
+                .hasMessage("포인트를 찾을 수 없습니다.");
+
+    }
+
 }

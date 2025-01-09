@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 @Entity
 @Getter
@@ -55,7 +56,7 @@ public class Seat extends BaseEntity {
     //임시 예약
     public void reserve() {
         if (this.status != SeatStatus.AVAILABLE) {
-            throw new CustomException("이미 선택된 좌석입니다.");
+            throw new CustomException(HttpStatus.CONFLICT, "이미 선택된 좌석입니다.");
         }
         this.status = SeatStatus.RESERVED;
     }

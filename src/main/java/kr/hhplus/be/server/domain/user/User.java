@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.util.UUID;
 import kr.hhplus.be.server.domain.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,22 +21,20 @@ public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private String id;
+    private Long id;
 
     private String name;
 
     private String email;
 
     @Builder
-    private User(String id, String name, String email) {
-        this.id = id;
+    private User( String name, String email) {
         this.name = name;
         this.email = email;
     }
 
     public static User create(String name, String email) {
         return User.builder()
-                .id(UUID.randomUUID().toString())
                 .name(name)
                 .email(email)
                 .build();
