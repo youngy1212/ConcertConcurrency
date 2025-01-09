@@ -41,7 +41,7 @@ class ReservationServiceTest {
         TemporaryReservation temporaryReservation = TemporaryReservation.create(concertSchedule, user, seat, expiresAt,
                 queueToken);
 
-        when(reservationStore.save(any(TemporaryReservation.class))).thenReturn(temporaryReservation);
+        when(reservationStore.temporaryReservationSave(any(TemporaryReservation.class))).thenReturn(temporaryReservation);
 
         // when
         TemporaryReservation result = reservationService.createTemporaryReservation(concertSchedule,
@@ -53,7 +53,33 @@ class ReservationServiceTest {
         assertEquals(result.getSeat().getSeatNumber(), seat.getSeatNumber());
         assertEquals(result.getExpiresAt(), expiresAt);
         assertEquals(result.getQueueTokenId(), queueToken);
-        verify(reservationStore).save(any(TemporaryReservation.class));
+        verify(reservationStore).temporaryReservationSave(any(TemporaryReservation.class));
+
+    }
+
+    @DisplayName("예약을 생성합니다.")
+    @Test
+    void CreateReservation() {
+        // given
+        User user = User.create("유저이름", "email.com");
+        Concert concert = Concert.create("공연", "고척돔");
+        ConcertSchedule concertSchedule = ConcertSchedule.create(concert, LocalDateTime.of(2024,12,12,18,0));
+        Seat seat = Seat.create(10,AVAILABLE,100000L,concertSchedule);
+        String queueToken = "QUEUE_TOKEN_ID";
+        LocalDateTime expiresAt = LocalDateTime.of(2024,12,12,18,0).plusMinutes(5);
+
+        Reservation reservation = Reservation.create(concertSchedule, user, seat);
+
+        when(reservationStore.reservationSave(any(Reservation.class))).thenReturn(reservation);
+
+        // when
+        Reservation result = reservationService.createReservation(concertSchedule, user, seat);
+
+        // then
+        assertEquals(result.getUser().getName(), user.getName());
+        assertEquals(result.getConcertSchedule().getConcertDate(), concertSchedule.getConcertDate());
+        assertEquals(result.getSeat().getSeatNumber(), seat.getSeatNumber());
+        verify(reservationStore).reservationSave(any(Reservation.class));
 
     }
 

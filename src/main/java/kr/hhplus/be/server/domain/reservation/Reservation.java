@@ -60,7 +60,4 @@ public class Reservation extends BaseEntity {
                 .build();
     }
 
-
-
-
 }
