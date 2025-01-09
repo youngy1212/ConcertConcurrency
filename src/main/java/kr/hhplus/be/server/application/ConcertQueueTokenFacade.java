@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class ConcertQueueTokenFacade {
 
     private final UserService userService;
@@ -20,6 +19,7 @@ public class ConcertQueueTokenFacade {
     private final QueueTokenService queueTokenService;
 
     //토큰 생성
+    @Transactional
     public QueueToken issueQueueToken(long userId, long concertId) {
 
         User user = userService.getUserById(userId);

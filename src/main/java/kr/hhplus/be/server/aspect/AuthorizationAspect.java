@@ -30,9 +30,9 @@ public class AuthorizationAspect {
         HttpServletRequest request =
                 ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader("QUEUE-TOKEN");
 
-        if (token == null || !token.startsWith("Bearer ")) {
+        if (token == null || token.isEmpty()) {
             throw new CustomException("잘못 된 경로입니다.");
         }
 
