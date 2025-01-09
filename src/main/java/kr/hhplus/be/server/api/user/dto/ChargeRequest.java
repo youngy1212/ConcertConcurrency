@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class ChargeRequest {
-    private String user_uuid;
+    private Long userId;
     private Long amount;
 }
