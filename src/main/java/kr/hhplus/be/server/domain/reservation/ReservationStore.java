@@ -2,5 +2,7 @@ package kr.hhplus.be.server.domain.reservation;
 
 public interface ReservationStore {
 
-    TemporaryReservation save(TemporaryReservation tempReservation);
+    TemporaryReservation temporaryReservationSave(TemporaryReservation tempReservation);
+
+    Reservation reservationSave(Reservation reservation);
 }

@@ -72,4 +72,10 @@ public class TemporaryReservation extends BaseEntity {
                 .queueTokenId(queueTokenId)
                 .build();
     }
+
+    //예약 만료 확인
+    public boolean isExpired(LocalDateTime time){
+        return expiresAt != null && expiresAt.isBefore(time);
+    }
+
 }

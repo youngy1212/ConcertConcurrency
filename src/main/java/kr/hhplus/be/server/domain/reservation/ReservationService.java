@@ -19,6 +19,17 @@ public class ReservationService {
         // 임시 예약 생성
         TemporaryReservation tempReservation = TemporaryReservation.create(concertSchedule, user, seat, expiresAt, queueTokenId);
 
-        return reservationStore.save(tempReservation);
+        return reservationStore.temporaryReservationSave(tempReservation);
+    }
+
+
+    //실제 예약 생성
+    public Reservation createReservation(ConcertSchedule concertSchedule, User user, Seat seat) {
+
+        //예약 생성
+        Reservation reservation = Reservation.create(concertSchedule,user,seat);
+
+        return reservationStore.reservationSave(reservation);
+
     }
 }
