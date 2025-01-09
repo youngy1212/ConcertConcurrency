@@ -120,10 +120,10 @@ class ConcertServiceTest {
         Concert concert = Concert.create("콘서트", "고척돔");
         ConcertSchedule concertSchedule = ConcertSchedule.create(concert, LocalDateTime.of(2024, 12, 12, 8, 50));
         Seat seat = Seat.create(20, SeatStatus.AVAILABLE, 2000L, concertSchedule);
-        when(concertReader.findBySeatId(seatId)).thenReturn(Optional.empty());
+        when(concertReader.findByIdLock(seatId)).thenReturn(Optional.empty());
 
         // when // then
-        assertThatThrownBy(()-> concertService.getSeat(seatId))
+        assertThatThrownBy(()-> concertService.findByIdLock(seatId))
                 .isInstanceOf(CustomException.class)
                 .hasMessage("콘서트의 좌석을 찾을 수 없습니다.");
 
