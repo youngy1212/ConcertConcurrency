@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class TokenRequest {
-    private String user_uuid;
+    private Long userId;
 }
