@@ -1,10 +1,13 @@
 package kr.hhplus.be.server.domain.token;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.Concert;
 import kr.hhplus.be.server.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +22,9 @@ class QueueTokenServiceTest {
 
     @Mock
     private QueueTokenStore queueTokenStore;
+
+    @Mock
+    private QueueTokenReader queueTokenReader;
 
     @InjectMocks
     private QueueTokenService queueTokenService;
@@ -44,7 +50,20 @@ class QueueTokenServiceTest {
 
     }
 
+    @DisplayName("인증할 토큰이 존재하지 않는 경우 오류 반환")
+    @Test
+    void authenticateTokenTokenNotFound() {
+        // given
+        String queueToken = "QUEUE_TOKEN_ID";
 
+        when(queueTokenReader.tokenFindById(queueToken)).thenReturn(Optional.empty());
+
+        // when // then
+        assertThatThrownBy(()-> queueTokenService.authenticateToken(queueToken))
+                .isInstanceOf(CustomException.class)
+                .hasMessage("잘못된 경로로 접근하였습니다.");
+
+    }
 
 
 
