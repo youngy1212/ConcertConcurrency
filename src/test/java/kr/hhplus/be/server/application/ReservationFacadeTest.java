@@ -3,7 +3,6 @@ package kr.hhplus.be.server.application;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import kr.hhplus.be.server.api.reservation.dto.ReservationResponse;
 import kr.hhplus.be.server.api.reservation.dto.TempReservationResponse;
@@ -30,14 +29,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Slf4j
 @SpringBootTest
 @ActiveProfiles("test")
 @Testcontainers
-@Transactional
 class ReservationFacadeTest {
 
 
@@ -68,8 +65,6 @@ class ReservationFacadeTest {
     @Autowired
     private PaymentJpaRepository paymentJpaRepository;
 
-    @Autowired
-    private EntityManager entityManager;
 
     @AfterEach
     void tearDown() {
@@ -158,7 +153,6 @@ class ReservationFacadeTest {
         ConcertSchedule concertSchedule = ConcertScheduleJpaRepository.save(ConcertSchedule.create(concert, LocalDateTime.of(2024,12,12,10,00)));
         Seat seat = seatJpaRepository.save(Seat.create(20, SeatStatus.AVAILABLE, 2000L, concertSchedule));
         String tokenId = "TOKEN_ID";
-        entityManager.flush();
 
         // when
         TempReservationResponse tempReservationResponse = reservationFacade.tempReserveSeat(saveUse.getId(), seat.getSeatId(),
@@ -183,7 +177,7 @@ class ReservationFacadeTest {
                 TemporaryReservation.create(concertSchedule, saveUse, seat, LocalDateTime.now().plusMinutes(5),
                         queueToken.getQueueTokenId()));
         String payData = "AA";
-        entityManager.flush();
+
 
         // When
         ReservationResponse reservationResponse = reservationFacade.completeReservation(
@@ -198,7 +192,6 @@ class ReservationFacadeTest {
 
     @DisplayName("좌석 정보가 불일치")
     @Test
-    @Transactional
     public void completeReservation_FailSeat() {
         // Given
         User saveUse = UserJpaRepository.save(User.create("유저", "eamil@naemver"));
@@ -211,7 +204,7 @@ class ReservationFacadeTest {
                 TemporaryReservation.create(concertSchedule, saveUse, seat, LocalDateTime.now().plusMinutes(5),
                         queueToken.getQueueTokenId()));
         String payData = "AA";
-        entityManager.flush();
+
 
         // when //then
         assertThatThrownBy(()-> reservationFacade.completeReservation(saveUse.getId(), concert.getId(), seat2.getSeatId(), queueToken.getQueueTokenId(), tempReservation.getId(),payData))
@@ -223,7 +216,6 @@ class ReservationFacadeTest {
 
     @DisplayName("유저 정보가 불일치")
     @Test
-    @Transactional
     public void completeReservation_FailUser() {
         // Given
         User saveUse = UserJpaRepository.save(User.create("유저", "eamil@naemver"));
@@ -236,7 +228,6 @@ class ReservationFacadeTest {
                 TemporaryReservation.create(concertSchedule, saveUse, seat, LocalDateTime.now().plusMinutes(5),
                         queueToken.getQueueTokenId()));
         String payData = "AA";
-        entityManager.flush();
 
 
         // when //then
