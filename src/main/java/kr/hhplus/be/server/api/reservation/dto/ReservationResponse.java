@@ -7,16 +7,17 @@ import lombok.Getter;
 public class ReservationResponse {
 
     @Schema( description = "결제 ID")
-    private final Long payment_id;
+    private final Long paymentTd;
     @Schema( description = "예약 ID")
-    private final Long reservation_id;
+    private final Long reservationTd;
 
-    private ReservationResponse(Long payment_id, Long reservation_id) {
-        this.payment_id = payment_id;
-        this.reservation_id = reservation_id;
+
+    private ReservationResponse(Long paymentTd, Long reservationTd) {
+        this.paymentTd = paymentTd;
+        this.reservationTd = reservationTd;
     }
 
-    public static ReservationResponse of(Long payment_id, Long reservation_id) {
-      return new ReservationResponse(payment_id, reservation_id);
+    public static ReservationResponse of(Long paymentTd, Long reservationTd) {
+      return new ReservationResponse(paymentTd, reservationTd);
     }
 }
