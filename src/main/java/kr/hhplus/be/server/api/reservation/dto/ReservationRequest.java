@@ -4,7 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class ReservationRequest {
-    private String user_uuid;
-    private Long seat_id;
-    private String token_uuid;
+    private Long userId;
+    private Long seatId;
+    private String tokenId;
+    private Long temporaryReservationId;
+    private Long concertScheduleId;
+    private String paymentData;
 }
+

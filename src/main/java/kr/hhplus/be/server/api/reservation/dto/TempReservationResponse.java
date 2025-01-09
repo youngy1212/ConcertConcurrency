@@ -2,7 +2,9 @@ package kr.hhplus.be.server.api.reservation.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
+import lombok.Getter;
 
+@Getter
 public class TempReservationResponse {
 
     @Schema(description = "임시 예약 ID")
