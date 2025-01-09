@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.infrastructure.token;
 
 import java.util.List;
+import java.util.Optional;
 import kr.hhplus.be.server.domain.token.QueueToken;
 import kr.hhplus.be.server.domain.token.QueueTokenReader;
 import kr.hhplus.be.server.domain.token.QueueTokenStatus;
@@ -18,8 +19,11 @@ public class QueueTokenReaderImpl implements QueueTokenReader {
 
         return queueTokenJpaRepository.findTop10ByStatusOrderByEnqueuedAtAsc(queueTokenStatus);
 
+    }
 
-
+    @Override
+    public Optional<QueueToken> tokenFindById(String token) {
+        return queueTokenJpaRepository.findById(token);
     }
 
 
