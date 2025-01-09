@@ -48,10 +48,10 @@ class ConcertServiceTest {
     void ConcertScheduleNotFound() {
         // given
         long concertId = 1L;
-        when(concertReader.findByConcertId(concertId)).thenReturn(Collections.emptyList());
+        when(concertReader.findAllByConcertId(concertId)).thenReturn(Collections.emptyList());
 
         // when // then
-        assertThatThrownBy(()-> concertService.getConcertSchedule(concertId))
+        assertThatThrownBy(()-> concertService.getAllConcertSchedule(concertId))
                 .isInstanceOf(CustomException.class)
                 .hasMessage("콘서트의 예약 가능한 날을 찾을 수 없습니다.");
 
@@ -67,15 +67,15 @@ class ConcertServiceTest {
         ConcertSchedule concertSchedule2 = ConcertSchedule.create(concert,LocalDateTime.of(2024,12,13,8,50));
 
         List<ConcertSchedule> schedules = List.of(concertSchedule, concertSchedule2);
-        when(concertReader.findByConcertId(concertId)).thenReturn(schedules);
+        when(concertReader.findAllByConcertId(concertId)).thenReturn(schedules);
 
         // when
-        List<ConcertDateResponse> result = concertService.getConcertSchedule(concertId);
+        List<ConcertDateResponse> result = concertService.getAllConcertSchedule(concertId);
 
         // then
-        assertThat(result.get(0).getConcert_date())
+        assertThat(result.get(0).getConcertDate())
                 .isEqualTo(LocalDateTime.of(2024, 12, 12, 8, 50));
-        assertThat(result.get(1).getConcert_date())
+        assertThat(result.get(1).getConcertDate())
                 .isEqualTo(LocalDateTime.of(2024, 12, 13, 8, 50));
 
 
@@ -108,6 +108,24 @@ class ConcertServiceTest {
         //then
         assertThat(seatResponse.getSeat_ids()).hasSize(2);
         assertThat(seatResponse.getSeat_ids()).containsExactly(1L, 2L);
+
+    }
+
+
+    @DisplayName("콘서트 좌석을 찾아 Seat 반환")
+    @Test
+    void seatSuccess() {
+        // given
+        long seatId = 3L;
+        Concert concert = Concert.create("콘서트", "고척돔");
+        ConcertSchedule concertSchedule = ConcertSchedule.create(concert, LocalDateTime.of(2024, 12, 12, 8, 50));
+        Seat seat = Seat.create(20, SeatStatus.AVAILABLE, 2000L, concertSchedule);
+        when(concertReader.findBySeatId(seatId)).thenReturn(Optional.empty());
+
+        // when // then
+        assertThatThrownBy(()-> concertService.getSeat(seatId))
+                .isInstanceOf(CustomException.class)
+                .hasMessage("콘서트의 좌석을 찾을 수 없습니다.");
 
     }
 

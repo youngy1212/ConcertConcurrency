@@ -7,7 +7,11 @@ public interface ConcertReader {
 
     Optional<Concert> findById(final long id);
 
-    List<ConcertSchedule> findByConcertId(long concertId);
+    List<ConcertSchedule> findAllByConcertId(long concertId);
 
     List<Long> findByConcertScheduleId(long concertScheduleId);
+
+    Optional<Seat> findBySeatId(long seatId);
+
+    Optional<ConcertSchedule> getConcertSchedule(long concertScheduleId);
 }
