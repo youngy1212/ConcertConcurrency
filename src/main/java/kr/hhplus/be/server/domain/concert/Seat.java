@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import kr.hhplus.be.server.domain.common.entity.BaseEntity;
+import kr.hhplus.be.server.domain.common.exception.CustomException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +25,7 @@ public class Seat extends BaseEntity {
 
     private int seatNumber;
 
-    private String status;
+    private SeatStatus status;
 
     private Long price;
 
@@ -33,14 +34,14 @@ public class Seat extends BaseEntity {
     private ConcertSchedule concertSchedule;
 
     @Builder
-    private Seat( int seatNumber, String status, Long price,ConcertSchedule concertSchedule) {
+    private Seat( int seatNumber, SeatStatus status, Long price,ConcertSchedule concertSchedule) {
         this.seatNumber = seatNumber;
         this.status = status;
         this.price = price;
         this.concertSchedule = concertSchedule;
     }
 
-    public static Seat create(int seatNumber, String status, Long price,ConcertSchedule concertSchedule) {
+    public static Seat create(int seatNumber, SeatStatus status, Long price,ConcertSchedule concertSchedule) {
         return Seat.builder()
                 .seatNumber(seatNumber)
                 .status(status)
@@ -48,5 +49,32 @@ public class Seat extends BaseEntity {
                 .concertSchedule(concertSchedule)
                 .build();
     }
+
+
+    // === 상태 전이 메서드 ===
+    //임시 예약
+    public void reserve() {
+        if (this.status != SeatStatus.AVAILABLE) {
+            throw new CustomException("이미 선택된 좌석입니다.");
+        }
+        this.status = SeatStatus.RESERVED;
+    }
+
+    //좌석 예약 취소
+    public void cancelReserve() {
+        if (this.status != SeatStatus.RESERVED) {
+            throw new CustomException("좌석이 예약된 상태가 아닙니다.");
+        }
+        this.status = SeatStatus.AVAILABLE;
+    }
+
+    //좌석 확정 예약
+    public void book() {
+        if (this.status != SeatStatus.RESERVED) {
+            throw new CustomException("좌석이 임시 예약된 상태가 아닙니다.");
+        }
+        this.status = SeatStatus.BOOKED;
+    }
+
 
 }
