@@ -4,4 +4,6 @@ import java.util.Optional;
 
 public interface UserReader {
     Optional<User> findById(final Long findById);
+
+    Optional<Point> findByPoint(final Long userId);
 }
