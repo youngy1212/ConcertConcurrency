@@ -13,6 +13,7 @@ import kr.hhplus.be.server.infrastructure.concert.ConcertJpaRepository;
 import kr.hhplus.be.server.infrastructure.token.QueueTokenJpaRepository;
 import kr.hhplus.be.server.infrastructure.user.UserJpaRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ class QueueTokenConcurrencyTest {
 
     @Autowired
     private QueueTokenJpaRepository queueTokenJpaRepository;
+
+    @BeforeEach
+    void tearDown() {
+        queueTokenJpaRepository.deleteAllInBatch();
+    }
 
     @DisplayName("동시에 여러 요청이 오더라고 토큰한 콘서트당 하나만 존재한다.")
     @Test
