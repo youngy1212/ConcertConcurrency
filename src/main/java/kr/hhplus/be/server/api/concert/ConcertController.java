@@ -23,12 +23,12 @@ public class ConcertController {
     @GetMapping("/concert/date/{concertId}")
     public ResponseEntity<List<ConcertDateResponse>> getConcertDates(
             @PathVariable Long concertId){
-        return ResponseEntity.ok(concertService.getConcertSchedule(concertId));
+        return ResponseEntity.ok(concertService.getAllConcertSchedule(concertId));
     }
 
     @AuthorizationHeader
     @Operation(summary = "예약 가능 좌석 조회", description = "예약 가능한 좌석을 조회합니다.")
-    @GetMapping("/concert/seats/{ConcertScheduleId}")
+    @GetMapping("/concert/seats/{concertScheduleId}")
     public ResponseEntity<SeatResponse> getConcertSeats(
             @PathVariable Long concertScheduleId
     ){

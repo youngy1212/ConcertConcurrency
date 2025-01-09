@@ -20,9 +20,9 @@ public class ConcertService {
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND,"콘서트를 찾을 수 없습니다."));
     }
 
-    public List<ConcertDateResponse> getConcertSchedule(final long concertId) {
+    public List<ConcertDateResponse> getAllConcertSchedule(final long concertId) {
 
-        List<ConcertSchedule> schedules = concertReader.findByConcertId(concertId);
+        List<ConcertSchedule> schedules = concertReader.findAllByConcertId(concertId);
 
         if(schedules.isEmpty()){
             throw new CustomException(HttpStatus.NOT_FOUND, "콘서트의 예약 가능한 날을 찾을 수 없습니다.");
@@ -42,6 +42,13 @@ public class ConcertService {
         return SeatResponse.of(seatIds);
     }
 
+    public Seat getSeat(final long seatId) {
+        return concertReader.findBySeatId(seatId).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND,"콘서트의 좌석을 찾을 수 없습니다."));
+    }
+
+    public ConcertSchedule getConcertSchedule(final long concertScheduleId){
+        return concertReader.getConcertSchedule(concertScheduleId).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND,"콘서트 일정을 찾을 수 없습니다."));
+    }
 
 
 
