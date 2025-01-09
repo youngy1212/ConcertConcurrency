@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import kr.hhplus.be.server.api.user.dto.ChargeRequest;
 import kr.hhplus.be.server.api.user.dto.ChargeResponse;
 import kr.hhplus.be.server.api.user.dto.PointResponse;
-import kr.hhplus.be.server.domain.user.Point;
 import kr.hhplus.be.server.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PointController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Operation(summary = "잔액 충전", description = "유저의 POINT를 충전합니다.")
     @PostMapping("/point/charge")
     public ResponseEntity<ChargeResponse> tempReservationSeat(@RequestBody ChargeRequest request){
-        Point point = userService.chargePoint(request.getUserId(),
-                request.getAmount());
-        return ResponseEntity.ok(ChargeResponse.of(point.getId(),point.getAmount()));
+        return ResponseEntity.ok(userService.chargePoint(request.getUserId(),
+                request.getAmount()));
     }
 
     @Operation(summary = "잔액 조회", description = "유저의 POINT를 조회합니다.")
@@ -34,8 +32,7 @@ public class PointController {
     public ResponseEntity<PointResponse> tempReservationSeat(
             @PathVariable Long userId
     ){
-        Point point = userService.getPoint(userId);
-        return ResponseEntity.ok(PointResponse.of(point.getId(), point.getAmount()));
+        return ResponseEntity.ok(userService.getPoint(userId));
     }
 
 }

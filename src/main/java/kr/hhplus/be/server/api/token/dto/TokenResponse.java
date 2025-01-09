@@ -8,19 +8,19 @@ import lombok.Getter;
 public class TokenResponse {
 
     @Schema(description = "토큰 UUID")
-    private String token_uuid;
+    private String tokenId;
 
     @Schema(description = "토큰 만료 시간")
-    private LocalDateTime expires_at;
+    private LocalDateTime expiresAt;
 
 
-    private TokenResponse(String token_uuid, LocalDateTime expires_at) {
-        this.token_uuid = token_uuid;
-        this.expires_at = expires_at;
+    private TokenResponse(String tokenId, LocalDateTime expiresAt) {
+        this.tokenId = tokenId;
+        this.expiresAt = expiresAt;
     }
 
-    public static TokenResponse of(String token_uuid, LocalDateTime expires_at) {
-        return new TokenResponse(token_uuid,expires_at);
+    public static TokenResponse of(String tokenId, LocalDateTime expiresAt) {
+        return new TokenResponse(tokenId,expiresAt);
     }
 
 }

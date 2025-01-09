@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.application;
 
 import jakarta.transaction.Transactional;
+import kr.hhplus.be.server.api.token.dto.TokenResponse;
 import kr.hhplus.be.server.domain.concert.Concert;
 import kr.hhplus.be.server.domain.concert.ConcertService;
 import kr.hhplus.be.server.domain.token.QueueToken;
@@ -20,12 +21,13 @@ public class ConcertQueueTokenFacade {
 
     //토큰 생성
     @Transactional
-    public QueueToken issueQueueToken(long userId, long concertId) {
+    public TokenResponse issueQueueToken(long userId, long concertId) {
 
         User user = userService.getUserById(userId);
         Concert concert = concertService.getConcertById(concertId);
+        QueueToken queueToken = queueTokenService.issueToken(user, concert);
 
-        return queueTokenService.issueToken(user, concert);
+        return TokenResponse.of(queueToken.getQueueTokenId(),queueToken.getExpiresAt());
     }
 
 
