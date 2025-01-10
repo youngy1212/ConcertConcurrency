@@ -2,9 +2,9 @@ package kr.hhplus.be.server.infrastructure.token;
 
 import java.util.List;
 import java.util.Optional;
-import kr.hhplus.be.server.domain.token.QueueToken;
-import kr.hhplus.be.server.domain.token.QueueTokenReader;
-import kr.hhplus.be.server.domain.token.QueueTokenStatus;
+import kr.hhplus.be.server.domain.token.model.QueueToken;
+import kr.hhplus.be.server.domain.token.model.QueueTokenStatus;
+import kr.hhplus.be.server.domain.token.repository.QueueTokenReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

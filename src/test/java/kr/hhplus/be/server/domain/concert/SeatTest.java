@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
+import kr.hhplus.be.server.domain.concert.model.Concert;
+import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
+import kr.hhplus.be.server.domain.concert.model.Seat;
+import kr.hhplus.be.server.domain.concert.model.SeatStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +20,7 @@ class SeatTest {
         // given
         Concert concert = Concert.create("공연", "고척돔");
         ConcertSchedule concertSchedule = ConcertSchedule.create(concert, LocalDateTime.of(2024,12,12,18,0));
-        Seat seat = Seat.create(20,SeatStatus.BOOKED,10000L,concertSchedule);
+        Seat seat = Seat.create(20, SeatStatus.BOOKED,10000L,concertSchedule);
 
 
         // when   // then

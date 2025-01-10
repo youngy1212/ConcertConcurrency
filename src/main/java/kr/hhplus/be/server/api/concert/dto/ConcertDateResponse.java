@@ -2,7 +2,7 @@ package kr.hhplus.be.server.api.concert.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
-import kr.hhplus.be.server.domain.concert.ConcertSchedule;
+import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
 import lombok.Builder;
 import lombok.Getter;
 

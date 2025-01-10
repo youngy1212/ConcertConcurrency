@@ -5,6 +5,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
+import kr.hhplus.be.server.domain.user.repository.UserReader;
+import kr.hhplus.be.server.domain.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

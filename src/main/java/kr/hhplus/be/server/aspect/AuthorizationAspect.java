@@ -2,7 +2,7 @@ package kr.hhplus.be.server.aspect;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
-import kr.hhplus.be.server.domain.token.QueueTokenService;
+import kr.hhplus.be.server.domain.token.service.QueueTokenService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
