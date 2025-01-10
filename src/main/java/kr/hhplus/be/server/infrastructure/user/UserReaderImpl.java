@@ -1,9 +1,9 @@
 package kr.hhplus.be.server.infrastructure.user;
 
 import java.util.Optional;
-import kr.hhplus.be.server.domain.user.Point;
-import kr.hhplus.be.server.domain.user.User;
-import kr.hhplus.be.server.domain.user.UserReader;
+import kr.hhplus.be.server.domain.user.model.Point;
+import kr.hhplus.be.server.domain.user.model.User;
+import kr.hhplus.be.server.domain.user.repository.UserReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

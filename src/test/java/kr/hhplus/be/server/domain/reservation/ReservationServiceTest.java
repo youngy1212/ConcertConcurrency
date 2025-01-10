@@ -1,16 +1,20 @@
 package kr.hhplus.be.server.domain.reservation;
 
-import static kr.hhplus.be.server.domain.concert.SeatStatus.AVAILABLE;
+import static kr.hhplus.be.server.domain.concert.model.SeatStatus.AVAILABLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
-import kr.hhplus.be.server.domain.concert.Concert;
-import kr.hhplus.be.server.domain.concert.ConcertSchedule;
-import kr.hhplus.be.server.domain.concert.Seat;
-import kr.hhplus.be.server.domain.user.User;
+import kr.hhplus.be.server.domain.concert.model.Concert;
+import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
+import kr.hhplus.be.server.domain.concert.model.Seat;
+import kr.hhplus.be.server.domain.reservation.model.Reservation;
+import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
+import kr.hhplus.be.server.domain.reservation.repository.ReservationStore;
+import kr.hhplus.be.server.domain.reservation.service.ReservationService;
+import kr.hhplus.be.server.domain.user.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

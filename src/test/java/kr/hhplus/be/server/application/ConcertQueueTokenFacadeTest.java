@@ -5,8 +5,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import kr.hhplus.be.server.api.token.dto.TokenResponse;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
-import kr.hhplus.be.server.domain.concert.Concert;
-import kr.hhplus.be.server.domain.user.User;
+import kr.hhplus.be.server.domain.concert.model.Concert;
+import kr.hhplus.be.server.domain.user.model.User;
 import kr.hhplus.be.server.infrastructure.concert.ConcertJpaRepository;
 import kr.hhplus.be.server.infrastructure.user.UserJpaRepository;
 import lombok.extern.slf4j.Slf4j;

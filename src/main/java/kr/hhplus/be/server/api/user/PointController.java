@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import kr.hhplus.be.server.api.user.dto.ChargeRequest;
 import kr.hhplus.be.server.api.user.dto.ChargeResponse;
 import kr.hhplus.be.server.api.user.dto.PointResponse;
-import kr.hhplus.be.server.domain.user.UserService;
+import kr.hhplus.be.server.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
