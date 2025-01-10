@@ -1,7 +1,7 @@
 package kr.hhplus.be.server.infrastructure.token;
 
-import kr.hhplus.be.server.domain.token.QueueToken;
-import kr.hhplus.be.server.domain.token.QueueTokenStore;
+import kr.hhplus.be.server.domain.token.model.QueueToken;
+import kr.hhplus.be.server.domain.token.repository.QueueTokenStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

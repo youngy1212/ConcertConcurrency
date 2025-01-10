@@ -2,10 +2,10 @@ package kr.hhplus.be.server.infrastructure.concert;
 
 import java.util.List;
 import java.util.Optional;
-import kr.hhplus.be.server.domain.concert.Concert;
-import kr.hhplus.be.server.domain.concert.ConcertReader;
-import kr.hhplus.be.server.domain.concert.ConcertSchedule;
-import kr.hhplus.be.server.domain.concert.Seat;
+import kr.hhplus.be.server.domain.concert.model.Concert;
+import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
+import kr.hhplus.be.server.domain.concert.model.Seat;
+import kr.hhplus.be.server.domain.concert.repository.ConcertReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

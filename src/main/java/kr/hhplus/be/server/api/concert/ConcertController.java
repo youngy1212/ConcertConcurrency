@@ -5,7 +5,7 @@ import java.util.List;
 import kr.hhplus.be.server.annotation.AuthorizationHeader;
 import kr.hhplus.be.server.api.concert.dto.ConcertDateResponse;
 import kr.hhplus.be.server.api.concert.dto.SeatResponse;
-import kr.hhplus.be.server.domain.concert.ConcertService;
+import kr.hhplus.be.server.domain.concert.service.ConcertService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

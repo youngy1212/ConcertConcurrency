@@ -1,8 +1,8 @@
 package kr.hhplus.be.server.infrastructure.reservation;
 
-import kr.hhplus.be.server.domain.reservation.Reservation;
-import kr.hhplus.be.server.domain.reservation.ReservationStore;
-import kr.hhplus.be.server.domain.reservation.TemporaryReservation;
+import kr.hhplus.be.server.domain.reservation.model.Reservation;
+import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
+import kr.hhplus.be.server.domain.reservation.repository.ReservationStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

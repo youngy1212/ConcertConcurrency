@@ -1,13 +1,13 @@
 package kr.hhplus.be.server.application;
 
 import kr.hhplus.be.server.api.reservation.dto.TempReservationResponse;
-import kr.hhplus.be.server.domain.concert.ConcertSchedule;
-import kr.hhplus.be.server.domain.concert.ConcertService;
-import kr.hhplus.be.server.domain.concert.Seat;
-import kr.hhplus.be.server.domain.reservation.ReservationService;
-import kr.hhplus.be.server.domain.reservation.TemporaryReservation;
-import kr.hhplus.be.server.domain.user.User;
-import kr.hhplus.be.server.domain.user.UserService;
+import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
+import kr.hhplus.be.server.domain.concert.model.Seat;
+import kr.hhplus.be.server.domain.concert.service.ConcertService;
+import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
+import kr.hhplus.be.server.domain.reservation.service.ReservationService;
+import kr.hhplus.be.server.domain.user.model.User;
+import kr.hhplus.be.server.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

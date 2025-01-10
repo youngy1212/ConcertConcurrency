@@ -4,12 +4,12 @@ import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import kr.hhplus.be.server.api.token.dto.TokenResponse;
-import kr.hhplus.be.server.domain.concert.Concert;
-import kr.hhplus.be.server.domain.concert.ConcertService;
-import kr.hhplus.be.server.domain.token.QueueToken;
-import kr.hhplus.be.server.domain.token.QueueTokenService;
-import kr.hhplus.be.server.domain.user.User;
-import kr.hhplus.be.server.domain.user.UserService;
+import kr.hhplus.be.server.domain.concert.model.Concert;
+import kr.hhplus.be.server.domain.concert.service.ConcertService;
+import kr.hhplus.be.server.domain.token.model.QueueToken;
+import kr.hhplus.be.server.domain.token.service.QueueTokenService;
+import kr.hhplus.be.server.domain.user.model.User;
+import kr.hhplus.be.server.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

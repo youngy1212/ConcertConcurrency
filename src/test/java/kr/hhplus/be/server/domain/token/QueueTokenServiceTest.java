@@ -8,8 +8,13 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
-import kr.hhplus.be.server.domain.concert.Concert;
-import kr.hhplus.be.server.domain.user.User;
+import kr.hhplus.be.server.domain.concert.model.Concert;
+import kr.hhplus.be.server.domain.token.model.QueueToken;
+import kr.hhplus.be.server.domain.token.model.QueueTokenStatus;
+import kr.hhplus.be.server.domain.token.repository.QueueTokenReader;
+import kr.hhplus.be.server.domain.token.repository.QueueTokenStore;
+import kr.hhplus.be.server.domain.token.service.QueueTokenService;
+import kr.hhplus.be.server.domain.user.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

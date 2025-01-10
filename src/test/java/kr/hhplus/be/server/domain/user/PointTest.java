@@ -2,6 +2,8 @@ package kr.hhplus.be.server.domain.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import kr.hhplus.be.server.domain.user.model.Point;
+import kr.hhplus.be.server.domain.user.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

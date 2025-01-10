@@ -1,14 +1,15 @@
 package kr.hhplus.be.server.domain.reservation;
 
-import static kr.hhplus.be.server.domain.concert.SeatStatus.AVAILABLE;
+import static kr.hhplus.be.server.domain.concert.model.SeatStatus.AVAILABLE;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
-import kr.hhplus.be.server.domain.concert.Concert;
-import kr.hhplus.be.server.domain.concert.ConcertSchedule;
-import kr.hhplus.be.server.domain.concert.Seat;
-import kr.hhplus.be.server.domain.user.User;
+import kr.hhplus.be.server.domain.concert.model.Concert;
+import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
+import kr.hhplus.be.server.domain.concert.model.Seat;
+import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
+import kr.hhplus.be.server.domain.user.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
