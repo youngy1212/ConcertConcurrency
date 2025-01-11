@@ -1,21 +1,31 @@
 package kr.hhplus.be.server.api.concert.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
+import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
+import lombok.Builder;
 import lombok.Getter;
+
 
 @Getter
 public class ConcertDateResponse {
 
-    private Long concert_id;
-    private LocalDateTime concert_date;
+    @Schema( description = "콘서트 ID")
+    private final Long ConcertScheduleId;
 
-    private ConcertDateResponse(Long concert_id, LocalDateTime concert_date) {
-        this.concert_id = concert_id;
-        this.concert_date = concert_date;
+    @Schema(description = "콘서트 날짜")
+    private final LocalDateTime concertDate;
+
+    @Builder
+    private ConcertDateResponse(Long ConcertScheduleId, LocalDateTime concertDate) {
+        this.ConcertScheduleId = ConcertScheduleId;
+        this.concertDate = concertDate;
     }
 
-    public static ConcertDateResponse of(Long concert_id, LocalDateTime concert_date) {
-        return new ConcertDateResponse(concert_id,concert_date);
+    public static ConcertDateResponse of(ConcertSchedule concertSchedule) {
+        return ConcertDateResponse.builder()
+                .ConcertScheduleId(concertSchedule.getId())
+                .concertDate(concertSchedule.getConcertDate()).build();
 
     }
 }

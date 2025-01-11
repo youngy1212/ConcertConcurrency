@@ -1,9 +1,16 @@
 package kr.hhplus.be.server.api.reservation.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
+import lombok.Getter;
 
+@Getter
 public class TempReservationResponse {
+
+    @Schema(description = "임시 예약 ID")
     private Long temp_reservation_id;
+
+    @Schema(description = "임시 예약 만료 시간")
     private LocalDateTime expires_at;
 
     private TempReservationResponse(Long temp_reservation_id, LocalDateTime expires_at) {
