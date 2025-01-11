@@ -75,6 +75,16 @@ public class QueueToken extends BaseEntity {
                 .build();
     }
 
+    public static QueueToken createInTime(User user, Concert concert, LocalDateTime expiresAt) {
+        return QueueToken.builder()
+                .queueTokenId(UUID.randomUUID().toString())
+                .user(user)
+                .concert(concert)
+                .expiresAt(expiresAt)
+                .status(QueueTokenStatus.PENDING)
+                .build();
+    }
+
     //토큰 활성화
     public void tokenActive(LocalDateTime localDateTime){
         if(status == QueueTokenStatus.PENDING || status == QueueTokenStatus.EXPIRED){
@@ -96,6 +106,7 @@ public class QueueToken extends BaseEntity {
 
     //토크 만료 확인
     public boolean isExpired(){
+        System.out.println("Saved expiresAt: " + expiresAt.isBefore(LocalDateTime.now()));
         return expiresAt != null && expiresAt.isBefore(LocalDateTime.now());
     }
 
