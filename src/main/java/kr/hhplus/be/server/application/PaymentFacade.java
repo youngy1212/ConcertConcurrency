@@ -62,16 +62,15 @@ public class PaymentFacade {
 
         boolean pay = PaySystem.pay(seat.getPrice());
 
-        //결제 성공시
-        if(pay){
-            seat.book();
-            Reservation reservation = reservationService.createReservation(concertSchedule, user, seat);
-            Payment payment = paymentService.savePayment(user, reservation, seat.getPrice(), PaymentStatus.SUCCESS);
-            return ReservationResponse.of(payment.getId(),reservation.getId());
-        }else{
-            //결제 실패시
+        if(!pay){  //결제 실패시
             throw new CustomException(HttpStatus.PAYMENT_REQUIRED, "결제에 실패하였습니다.");
         }
+        //결제 성공시
+        seat.book();
+        Reservation reservation = reservationService.createReservation(concertSchedule, user, seat);
+        Payment payment = paymentService.savePayment(user, reservation, seat.getPrice(), PaymentStatus.SUCCESS);
+        return ReservationResponse.of(payment.getId(),reservation.getId());
+
 
     }
 }

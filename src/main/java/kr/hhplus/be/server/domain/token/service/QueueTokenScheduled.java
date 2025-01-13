@@ -21,8 +21,6 @@ public class QueueTokenScheduled {
     @Transactional
     @Scheduled(fixedDelay = 1000) //1초 간격으로 실행
     public void processActiveTokens(){
-        System.out.println("processActiveTokens 실행됨");
-
 
         List<QueueToken> tokens = queueTokenReader.findTopNOrderByEnqueuedAt(QueueTokenStatus.PENDING, 10);
 
