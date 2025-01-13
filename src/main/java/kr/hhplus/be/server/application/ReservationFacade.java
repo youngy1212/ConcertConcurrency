@@ -23,7 +23,7 @@ public class ReservationFacade {
     private final UserService userService;
 
     @Transactional
-    public TempReservationDto tempReserveSeat(Long userId, Long seat_id , Long ConcertScheduleId, String tokenId) {
+    public TempReservationDto reserveTempSeat(Long userId, Long seat_id , Long ConcertScheduleId, String tokenId) {
 
         User user = userService.getUserById(userId);
         ConcertSchedule concertSchedule = concertService.getConcertSchedule(ConcertScheduleId);

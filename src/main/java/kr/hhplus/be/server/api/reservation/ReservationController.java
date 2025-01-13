@@ -29,7 +29,7 @@ public class ReservationController {
     public ResponseEntity<TempReservationResponse> tempReservationSeat(
             @RequestBody TempReservationRequest request
     ){
-        TempReservationDto tempReservationDto = reservationFacade.tempReserveSeat(
+        TempReservationDto tempReservationDto = reservationFacade.reserveTempSeat(
                 request.getUserId(), request.getSeatId(), request.getUserId(), request.getTokenId());
         return ResponseEntity.ok(TempReservationResponse.of(tempReservationDto.tempReservationId(),tempReservationDto.expiresAt()));
     }

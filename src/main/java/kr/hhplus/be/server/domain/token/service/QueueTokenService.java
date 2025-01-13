@@ -25,19 +25,17 @@ public class QueueTokenService {
         return queueToken;
     }
 
-    public QueueToken authenticateToken(String token) {
+    public void authenticateToken(String token) {
 
         QueueToken queueToken =  queueTokenReader.tokenFindById(token).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND,"잘못된 경로로 접근하였습니다."));
 
         if(queueToken.isExpired()) {
             throw new CustomException("대기시간이 만료되었습니다.");
         }
-        return queueToken;
-
 
     }
 
-    public Optional<QueueToken> findByUserAndConcert(Long userId, Long concertId) {
-        return queueTokenReader.findByUserAndConcert(userId, concertId);
+    public Optional<QueueToken> findToken(Long userId, Long concertId) {
+        return queueTokenReader.findToken(userId, concertId);
     }
 }

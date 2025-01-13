@@ -26,7 +26,7 @@ public class UserService {
             throw new CustomException("잘못 청구되었습니다.");
         }
 
-        Point point = userReader.findByPoint(userId).orElseThrow(() -> new CustomException("포인트를 찾을 수 없습니다."));;
+        Point point = userReader.findByPoint(userId).orElseThrow(() -> new CustomException("포인트를 찾을 수 없습니다."));
         point.charge(amount);
 
         return new ChargeDto(point.getUser().getId(), point.getAmount());
