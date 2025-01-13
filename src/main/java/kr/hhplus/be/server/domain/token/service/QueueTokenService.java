@@ -29,11 +29,12 @@ public class QueueTokenService {
 
         QueueToken queueToken =  queueTokenReader.tokenFindById(token).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND,"잘못된 경로로 접근하였습니다."));
 
-        if(!queueToken.isExpired()){
-            return queueToken;
-        }else {
+        if(queueToken.isExpired()) {
             throw new CustomException("대기시간이 만료되었습니다.");
         }
+        return queueToken;
+
+
     }
 
     public Optional<QueueToken> findByUserAndConcert(Long userId, Long concertId) {

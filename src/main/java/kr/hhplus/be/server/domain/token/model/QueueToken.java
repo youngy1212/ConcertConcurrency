@@ -87,26 +87,28 @@ public class QueueToken extends BaseEntity {
 
     //토큰 활성화
     public void tokenActive(LocalDateTime localDateTime){
-        if(status == QueueTokenStatus.PENDING || status == QueueTokenStatus.EXPIRED){
-            status = QueueTokenStatus.ACTIVE;
-            expiresAt = localDateTime.plusMinutes(10);
-        }else{
+
+        if(status == QueueTokenStatus.ACTIVE){
             throw new CustomException("이미 예약중입니다.");
         }
+
+        status = QueueTokenStatus.ACTIVE;
+        expiresAt = localDateTime.plusMinutes(10);
+
     }
 
     //토큰 만료
     public void tokenExpire(){
-        if (status == QueueTokenStatus.ACTIVE || status == QueueTokenStatus.PENDING) {
-            status = QueueTokenStatus.EXPIRED;
-        } else {
+
+        if (status != QueueTokenStatus.ACTIVE && status != QueueTokenStatus.PENDING) {
             throw new CustomException("토큰을 만료시킬 수 없습니다.");
         }
+        
+        status = QueueTokenStatus.EXPIRED;
     }
 
     //토크 만료 확인
     public boolean isExpired(){
-        System.out.println("Saved expiresAt: " + expiresAt.isBefore(LocalDateTime.now()));
         return expiresAt != null && expiresAt.isBefore(LocalDateTime.now());
     }
 
