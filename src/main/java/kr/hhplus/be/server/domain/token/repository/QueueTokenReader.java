@@ -11,5 +11,5 @@ public interface QueueTokenReader {
 
     Optional<QueueToken> tokenFindById(String token);
 
-    Optional<QueueToken> findByUserAndConcert(Long user, Long concert);
+    Optional<QueueToken> findToken(Long user, Long concert);
 }

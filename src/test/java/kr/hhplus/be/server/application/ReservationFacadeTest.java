@@ -85,7 +85,7 @@ class ReservationFacadeTest {
 
     @DisplayName("임시예약 요청시 잘못된 유저 정보 요청")
     @Test
-    void tempReserveSeatNotUser() {
+    void reserveTempSeatNotUser() {
 
         // given
         Concert concert = ConcertJpaRepository.save(Concert.create("콘서트1","인스파이어"));
@@ -97,7 +97,7 @@ class ReservationFacadeTest {
 
 
         // when //then
-        assertThatThrownBy(()-> reservationFacade.tempReserveSeat(userId, seat.getSeatId(),
+        assertThatThrownBy(()-> reservationFacade.reserveTempSeat(userId, seat.getSeatId(),
                 concertSchedule.getId(), tokenId))
                 .isInstanceOf(CustomException.class)
                 .hasMessage("유저를 찾을 수 없습니다.");
@@ -106,7 +106,7 @@ class ReservationFacadeTest {
 
     @DisplayName("임시예약 요청시 잘못된 콘서트 정보 요청")
     @Test
-    void tempReserveSeatNotConcertSchedule() {
+    void reserveTempSeatNotConcertSchedule() {
 
         // given
         User saveUse = UserJpaRepository.save(User.create("유저", "eamil@naemver"));
@@ -118,7 +118,7 @@ class ReservationFacadeTest {
 
 
         // when //then
-        assertThatThrownBy(()-> reservationFacade.tempReserveSeat(saveUse.getId(), seat.getSeatId(),
+        assertThatThrownBy(()-> reservationFacade.reserveTempSeat(saveUse.getId(), seat.getSeatId(),
                 ConcertSchedule, tokenId))
                 .isInstanceOf(CustomException.class)
                 .hasMessage("콘서트 일정을 찾을 수 없습니다.");
@@ -127,7 +127,7 @@ class ReservationFacadeTest {
 
     @DisplayName("이미 선택한 좌석일 경우")
     @Test
-    void tempReserveSeatAlreadyReserved() {
+    void reserveTempSeatAlreadyReserved() {
 
         // given
         User saveUse = UserJpaRepository.save(User.create("유저", "eamil@naemver"));
@@ -138,7 +138,7 @@ class ReservationFacadeTest {
 
 
         // when //then
-        assertThatThrownBy(()-> reservationFacade.tempReserveSeat(saveUse.getId(), seat.getSeatId(),
+        assertThatThrownBy(()-> reservationFacade.reserveTempSeat(saveUse.getId(), seat.getSeatId(),
                 concertSchedule.getId(), tokenId))
                 .isInstanceOf(CustomException.class)
                 .hasMessage("이미 선택된 좌석입니다.");
@@ -147,7 +147,7 @@ class ReservationFacadeTest {
 
     @DisplayName("좌석을 성공적으로 임시 예약")
     @Test
-    void tempReserveSeatSuccess() {
+    void reserveTempSeatSuccess() {
 
         // given
         User saveUse = UserJpaRepository.save(User.create("유저", "eamil@naemver"));
@@ -157,7 +157,7 @@ class ReservationFacadeTest {
         String tokenId = "TOKEN_ID";
 
         // when
-        TempReservationDto tempReservationDto = reservationFacade.tempReserveSeat(saveUse.getId(), seat.getSeatId(),
+        TempReservationDto tempReservationDto = reservationFacade.reserveTempSeat(saveUse.getId(), seat.getSeatId(),
                 concertSchedule.getId(), tokenId);
 
 

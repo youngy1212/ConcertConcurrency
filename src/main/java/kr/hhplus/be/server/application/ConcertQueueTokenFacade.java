@@ -29,7 +29,7 @@ public class ConcertQueueTokenFacade {
         Concert concert = concertService.getConcertById(concertId);
 
         // 이미 토큰이 있는지 확인
-        Optional<QueueToken> findToken = queueTokenService.findByUserAndConcert(user.getId(), concert.getId());
+        Optional<QueueToken> findToken = queueTokenService.findToken(user.getId(), concert.getId());
 
         if (findToken.isPresent()) { //토큰이 있을때
             QueueToken token = findToken.get();

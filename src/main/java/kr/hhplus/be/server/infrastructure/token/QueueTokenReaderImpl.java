@@ -27,7 +27,7 @@ public class QueueTokenReaderImpl implements QueueTokenReader {
     }
 
     @Override
-    public Optional<QueueToken> findByUserAndConcert(Long userId, Long concertId) {
+    public Optional<QueueToken> findToken(Long userId, Long concertId) {
         return queueTokenJpaRepository.findByUserAndConcertLock(userId,concertId);
     }
 
