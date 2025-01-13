@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.application;
 
-import kr.hhplus.be.server.api.reservation.dto.TempReservationResponse;
+
+import kr.hhplus.be.server.application.dto.TempReservationDto;
 import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
 import kr.hhplus.be.server.domain.concert.model.Seat;
 import kr.hhplus.be.server.domain.concert.service.ConcertService;
@@ -22,7 +23,7 @@ public class ReservationFacade {
     private final UserService userService;
 
     @Transactional
-    public TempReservationResponse tempReserveSeat(Long userId, Long seat_id , Long ConcertScheduleId, String tokenId) {
+    public TempReservationDto tempReserveSeat(Long userId, Long seat_id , Long ConcertScheduleId, String tokenId) {
 
         User user = userService.getUserById(userId);
         ConcertSchedule concertSchedule = concertService.getConcertSchedule(ConcertScheduleId);
@@ -30,7 +31,7 @@ public class ReservationFacade {
         seat.reserve();
         TemporaryReservation temporaryReservation = reservationService.createTemporaryReservation(concertSchedule, user,
                 seat, tokenId);
-        return TempReservationResponse.of(temporaryReservation.getId(),temporaryReservation.getExpiresAt());
+        return new TempReservationDto(temporaryReservation.getId(),temporaryReservation.getExpiresAt());
     }
 
 

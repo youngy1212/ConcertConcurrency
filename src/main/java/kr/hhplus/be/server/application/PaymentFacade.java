@@ -1,6 +1,6 @@
 package kr.hhplus.be.server.application;
 
-import kr.hhplus.be.server.api.reservation.dto.ReservationResponse;
+import kr.hhplus.be.server.application.dto.ReservationDto;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
 import kr.hhplus.be.server.domain.concert.model.Seat;
@@ -45,7 +45,7 @@ public class PaymentFacade {
 
     //예약 완료
     @Transactional
-    public ReservationResponse completeReservation(Long userId, Long ConcertScheduleId, Long seatId, String tokenId, Long temporaryReservationId, String paymentData) {
+    public ReservationDto completeReservation(Long userId, Long ConcertScheduleId, Long seatId, String tokenId, Long temporaryReservationId, String paymentData) {
 
         User user = userService.getUserById(userId);
         TemporaryReservation temporaryReservation = reservationService.getTemporaryReservation(temporaryReservationId);
@@ -65,11 +65,12 @@ public class PaymentFacade {
         if(!pay){  //결제 실패시
             throw new CustomException(HttpStatus.PAYMENT_REQUIRED, "결제에 실패하였습니다.");
         }
+
         //결제 성공시
         seat.book();
         Reservation reservation = reservationService.createReservation(concertSchedule, user, seat);
         Payment payment = paymentService.savePayment(user, reservation, seat.getPrice(), PaymentStatus.SUCCESS);
-        return ReservationResponse.of(payment.getId(),reservation.getId());
+        return new ReservationDto(payment.getId(),reservation.getId(), reservation.getSeat().getSeatId());
 
 
     }

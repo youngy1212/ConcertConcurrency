@@ -3,7 +3,7 @@ package kr.hhplus.be.server.application;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import kr.hhplus.be.server.api.token.dto.TokenResponse;
+import kr.hhplus.be.server.application.dto.QueueTokenDto;
 import kr.hhplus.be.server.domain.concert.model.Concert;
 import kr.hhplus.be.server.domain.concert.service.ConcertService;
 import kr.hhplus.be.server.domain.token.model.QueueToken;
@@ -23,7 +23,7 @@ public class ConcertQueueTokenFacade {
 
     //토큰 생성
     @Transactional
-    public TokenResponse issueQueueToken(long userId, long concertId) {
+    public QueueTokenDto issueQueueToken(long userId, long concertId) {
 
         User user = userService.getUserById(userId);
         Concert concert = concertService.getConcertById(concertId);
@@ -34,12 +34,11 @@ public class ConcertQueueTokenFacade {
         if (findToken.isPresent()) { //토큰이 있을때
             QueueToken token = findToken.get();
             token.tokenActive(LocalDateTime.now()); //현재 시간으로 다시 활성화
-            return TokenResponse.of(token.getQueueTokenId(), token.getExpiresAt());
+            return new QueueTokenDto(token.getQueueTokenId(), token.getUser().getId(), token.getConcert().getId(), token.getExpiresAt());
         }
-
         //없을때
         QueueToken queueToken = queueTokenService.issueToken(user, concert);
-        return TokenResponse.of(queueToken.getQueueTokenId(), queueToken.getExpiresAt());
+        return  new QueueTokenDto(queueToken.getQueueTokenId(), queueToken.getUser().getId(), queueToken.getConcert().getId(), queueToken.getExpiresAt());
 
     }
 

@@ -8,6 +8,8 @@ import kr.hhplus.be.server.api.reservation.dto.TempReservationRequest;
 import kr.hhplus.be.server.api.reservation.dto.TempReservationResponse;
 import kr.hhplus.be.server.application.PaymentFacade;
 import kr.hhplus.be.server.application.ReservationFacade;
+import kr.hhplus.be.server.application.dto.ReservationDto;
+import kr.hhplus.be.server.application.dto.TempReservationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,19 +29,19 @@ public class ReservationController {
     public ResponseEntity<TempReservationResponse> tempReservationSeat(
             @RequestBody TempReservationRequest request
     ){
-        TempReservationResponse tempReservationResponse = reservationFacade.tempReserveSeat(
+        TempReservationDto tempReservationDto = reservationFacade.tempReserveSeat(
                 request.getUserId(), request.getSeatId(), request.getUserId(), request.getTokenId());
-        return ResponseEntity.ok(tempReservationResponse);
+        return ResponseEntity.ok(TempReservationResponse.of(tempReservationDto.tempReservationId(),tempReservationDto.expiresAt()));
     }
 
     @AuthorizationHeader
     @Operation(summary = "결제 요청", description = "예약에 대한 결제를 진행합니다.")
     @PostMapping("/reservation/payment")
     public ResponseEntity<ReservationResponse> reservationSeat(@RequestBody ReservationRequest request){
-        ReservationResponse reservationResponse = paymentFacade.completeReservation(request.getUserId(),
+        ReservationDto reservationDto = paymentFacade.completeReservation(request.getUserId(),
                 request.getConcertScheduleId(), request.getSeatId()
                 , request.getTokenId(), request.getTemporaryReservationId(), request.getPaymentData());
-        return ResponseEntity.ok(reservationResponse);
+        return ResponseEntity.ok(ReservationResponse.of(reservationDto.paymentId(), reservationDto.reservationId(), reservationDto.seatId()));
     }
 
 }
