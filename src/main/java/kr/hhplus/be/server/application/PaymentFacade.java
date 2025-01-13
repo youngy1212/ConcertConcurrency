@@ -17,7 +17,6 @@ import kr.hhplus.be.server.infrastructure.gateway.PaySystem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -30,18 +29,6 @@ public class PaymentFacade {
     private final ConcertService concertService;
     private final UserService userService;
     private final PaymentService paymentService;
-
-    //좌석을 PENDING 상태로 변경
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void setSeatPending(Seat seat) {
-        seat.pending();
-    }
-
-    //좌석의 PENDING 상태를 취소
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void cancelSeatPending(Seat seat) {
-        seat.cancelReserve();
-    }
 
     //예약 완료
     @Transactional
