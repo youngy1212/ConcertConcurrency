@@ -3,7 +3,7 @@ package kr.hhplus.be.server.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import kr.hhplus.be.server.api.token.dto.TokenResponse;
+import kr.hhplus.be.server.application.dto.QueueTokenDto;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.model.Concert;
 import kr.hhplus.be.server.domain.user.model.User;
@@ -40,11 +40,12 @@ class ConcertQueueTokenFacadeTest {
         Concert SaveConcert = ConcertJpaRepository.save(Concert.create("콘서트1","인스파이어"));
 
         // when
-        TokenResponse tokenResponse = concertQueueTokenFacade.issueQueueToken(save.getId(), SaveConcert.getId());
+        QueueTokenDto tokenResponse = concertQueueTokenFacade.issueQueueToken(save.getId(), SaveConcert.getId());
 
         // then
         assertThat(tokenResponse).isNotNull();
-        //확인할만한게 없네.. TODO //
+        assertThat(tokenResponse.concertId()).isEqualTo(SaveConcert.getId());
+        assertThat(tokenResponse.userId()).isEqualTo(save.getId());
     }
 
     @DisplayName("비정상 공연 토큰 발급 요청")

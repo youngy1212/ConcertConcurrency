@@ -6,6 +6,7 @@ import kr.hhplus.be.server.api.user.dto.ChargeRequest;
 import kr.hhplus.be.server.api.user.dto.ChargeResponse;
 import kr.hhplus.be.server.api.user.dto.PointResponse;
 import kr.hhplus.be.server.domain.user.service.UserService;
+import kr.hhplus.be.server.domain.user.service.dto.ChargeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,9 @@ public class PointController {
     @Operation(summary = "잔액 충전", description = "유저의 POINT를 충전합니다.")
     @PostMapping("/point/charge")
     public ResponseEntity<ChargeResponse> tempReservationSeat(@RequestBody ChargeRequest request){
-        return ResponseEntity.ok(userService.chargePoint(request.getUserId(),
-                request.getAmount()));
+        ChargeDto chargeDto = userService.chargePoint(request.getUserId(),
+                request.getAmount());
+        return ResponseEntity.ok(ChargeResponse.of(chargeDto.userId(), chargeDto.Amount()));
     }
 
     @Operation(summary = "잔액 조회", description = "유저의 POINT를 조회합니다.")
@@ -32,7 +34,8 @@ public class PointController {
     public ResponseEntity<PointResponse> tempReservationSeat(
             @PathVariable Long userId
     ){
-        return ResponseEntity.ok(userService.getPoint(userId));
+        ChargeDto chargeDto = userService.getPoint(userId);
+        return ResponseEntity.ok(PointResponse.of(chargeDto.userId(), chargeDto.Amount()));
     }
 
 }

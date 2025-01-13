@@ -1,11 +1,12 @@
 package kr.hhplus.be.server.application;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
-import kr.hhplus.be.server.api.reservation.dto.ReservationResponse;
-import kr.hhplus.be.server.api.reservation.dto.TempReservationResponse;
+import kr.hhplus.be.server.application.dto.ReservationDto;
+import kr.hhplus.be.server.application.dto.TempReservationDto;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.model.Concert;
 import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
@@ -156,11 +157,11 @@ class ReservationFacadeTest {
         String tokenId = "TOKEN_ID";
 
         // when
-        TempReservationResponse tempReservationResponse = reservationFacade.tempReserveSeat(saveUse.getId(), seat.getSeatId(),
+        TempReservationDto tempReservationDto = reservationFacade.tempReserveSeat(saveUse.getId(), seat.getSeatId(),
                 concertSchedule.getId(), tokenId);
 
 
-        assertNotNull(tempReservationResponse);
+        assertNotNull(tempReservationDto);
 
     }
 
@@ -181,13 +182,13 @@ class ReservationFacadeTest {
 
 
         // When
-        ReservationResponse reservationResponse = paymentFacade.completeReservation(
+        ReservationDto reservationResponse = paymentFacade.completeReservation(
                 saveUse.getId(), concertSchedule.getId(), seat.getSeatId() , queueToken.getQueueTokenId(), tempReservation.getId(),payData);
 
 
         // Then
         assertNotNull(reservationResponse);
-        //어떻게 알아야되징...
+        assertThat(reservationResponse.seatId()).isEqualTo(seat.getSeatId());
 
     }
 

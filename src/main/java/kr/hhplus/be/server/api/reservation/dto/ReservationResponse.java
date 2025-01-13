@@ -8,16 +8,21 @@ public class ReservationResponse {
 
     @Schema( description = "결제 ID")
     private final Long paymentTd;
+
     @Schema( description = "예약 ID")
     private final Long reservationTd;
 
+    @Schema( description = "예약 ID")
+    private final Long seatId;
 
-    private ReservationResponse(Long paymentTd, Long reservationTd) {
+
+    private ReservationResponse(Long paymentTd, Long reservationTd, Long seatId) {
         this.paymentTd = paymentTd;
         this.reservationTd = reservationTd;
+        this.seatId = seatId;
     }
 
-    public static ReservationResponse of(Long paymentTd, Long reservationTd) {
-      return new ReservationResponse(paymentTd, reservationTd);
+    public static ReservationResponse of(Long paymentTd, Long reservationTd, Long seatId) {
+      return new ReservationResponse(paymentTd, reservationTd,seatId );
     }
 }
