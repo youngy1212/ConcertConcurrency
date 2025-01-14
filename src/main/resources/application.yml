@@ -22,6 +22,10 @@ spring:
       hibernate.jdbc.time_zone: UTC
 server:
   port: 8087
+
+logging:
+  level:
+    kr.hhplus.be.server.Filter.LoggingFilter: INFO
 ---
 spring.config.activate.on-profile: local, test
 
