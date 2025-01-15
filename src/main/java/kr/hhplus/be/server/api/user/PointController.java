@@ -5,7 +5,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import kr.hhplus.be.server.api.user.dto.ChargeRequest;
 import kr.hhplus.be.server.api.user.dto.ChargeResponse;
 import kr.hhplus.be.server.api.user.dto.PointResponse;
-import kr.hhplus.be.server.domain.user.service.UserService;
+import kr.hhplus.be.server.domain.user.service.UserCommandService;
+import kr.hhplus.be.server.domain.user.service.UserQueryService;
 import kr.hhplus.be.server.domain.user.service.dto.ChargeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PointController {
 
-    private final UserService userService;
+    private final UserQueryService userQueryService;
+    private final UserCommandService userCommandService;
 
     @Operation(summary = "잔액 충전", description = "유저의 POINT를 충전합니다.")
     @PostMapping("/point/charge")
     public ResponseEntity<ChargeResponse> tempReservationSeat(@RequestBody ChargeRequest request){
-        ChargeDto chargeDto = userService.chargePoint(request.getUserId(),
+        ChargeDto chargeDto = userCommandService.chargePoint(request.getUserId(),
                 request.getAmount());
         return ResponseEntity.ok(ChargeResponse.of(chargeDto.userId(), chargeDto.Amount()));
     }
@@ -34,7 +36,7 @@ public class PointController {
     public ResponseEntity<PointResponse> tempReservationSeat(
             @PathVariable Long userId
     ){
-        ChargeDto chargeDto = userService.getPoint(userId);
+        ChargeDto chargeDto = userQueryService.getPoint(userId);
         return ResponseEntity.ok(PointResponse.of(chargeDto.userId(), chargeDto.Amount()));
     }
 

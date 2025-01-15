@@ -9,7 +9,7 @@ import kr.hhplus.be.server.domain.concert.service.ConcertQueryService;
 import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
 import kr.hhplus.be.server.domain.reservation.service.ReservationCommandService;
 import kr.hhplus.be.server.domain.user.model.User;
-import kr.hhplus.be.server.domain.user.service.UserService;
+import kr.hhplus.be.server.domain.user.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +22,12 @@ public class ReservationFacade {
     private final ReservationCommandService reservationCommandService;
     private final ConcertQueryService concertQueryService;
     private final ConcertCommandService concertCommandService;
-    private final UserService userService;
+    private final UserQueryService userQueryService;
 
     @Transactional
     public TempReservationDto reserveTempSeat(Long userId, Long seat_id , Long ConcertScheduleId, String tokenId) {
 
-        User user = userService.getUserById(userId);
+        User user = userQueryService.getUserById(userId);
         ConcertSchedule concertSchedule = concertQueryService.getConcertSchedule(ConcertScheduleId);
         Seat seat = concertCommandService.findByIdLock(seat_id);
         seat.reserve();
