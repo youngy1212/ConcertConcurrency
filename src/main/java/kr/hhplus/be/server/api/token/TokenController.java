@@ -1,6 +1,6 @@
 package kr.hhplus.be.server.api.token;
 
-import io.swagger.v3.oas.annotations.Operation;
+import kr.hhplus.be.server.api.token.dto.SwaggerTokenController;
 import kr.hhplus.be.server.api.token.dto.TokenResponse;
 import kr.hhplus.be.server.application.ConcertQueueTokenFacade;
 import kr.hhplus.be.server.application.dto.QueueTokenDto;
@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class TokenController {
+public class TokenController implements SwaggerTokenController {
 
     private final ConcertQueueTokenFacade concertQueueTokenFacade;
 
-    @Operation(summary = "대기열 토큰 발급", description = "유저의 대기열 토큰을 발급합니다.")
     @GetMapping("/tokens/{userId}/{concertId}")
     public ResponseEntity<TokenResponse> issueServiceToken(
             @PathVariable Long userId,

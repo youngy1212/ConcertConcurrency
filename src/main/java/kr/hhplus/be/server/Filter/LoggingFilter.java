@@ -43,7 +43,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     //swagger 필터 제외
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        String[] excludePath = {"/swagger-ui"};
+        String[] excludePath = {"/swagger-ui","/v3/api-docs"};
         String path = request.getRequestURI();
         return Arrays.stream(excludePath).anyMatch(path::startsWith);
     }
