@@ -1,13 +1,9 @@
 package kr.hhplus.be.server.domain.token.repository;
 
-import java.util.List;
 import java.util.Optional;
 import kr.hhplus.be.server.domain.token.model.QueueToken;
-import kr.hhplus.be.server.domain.token.model.QueueTokenStatus;
 
-public interface QueueTokenReader {
-
-    List<QueueToken> findTopNOrderByEnqueuedAt(QueueTokenStatus queueTokenStatus, int count);
+public interface QueueTokenQuery {
 
     Optional<QueueToken> tokenFindById(String token);
 

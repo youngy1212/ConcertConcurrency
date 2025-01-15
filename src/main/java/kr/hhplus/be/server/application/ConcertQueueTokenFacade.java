@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import kr.hhplus.be.server.application.dto.QueueTokenDto;
 import kr.hhplus.be.server.domain.concert.model.Concert;
-import kr.hhplus.be.server.domain.concert.service.ConcertCommandService;
 import kr.hhplus.be.server.domain.concert.service.ConcertQueryService;
 import kr.hhplus.be.server.domain.token.model.QueueToken;
-import kr.hhplus.be.server.domain.token.service.QueueTokenService;
+import kr.hhplus.be.server.domain.token.service.QueueTokenCommandService;
+import kr.hhplus.be.server.domain.token.service.QueueTokenQueryService;
 import kr.hhplus.be.server.domain.user.model.User;
 import kr.hhplus.be.server.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,9 @@ import org.springframework.stereotype.Service;
 public class ConcertQueueTokenFacade {
 
     private final UserService userService;
-    private final ConcertCommandService concertCommandService;
     private final ConcertQueryService concertQueryService;
-    private final QueueTokenService queueTokenService;
+    private final QueueTokenQueryService queueTokenQueryService;
+    private final QueueTokenCommandService queueTokenCommandService;
 
     //토큰 생성
     @Transactional
@@ -31,7 +31,7 @@ public class ConcertQueueTokenFacade {
         Concert concert = concertQueryService.getConcertById(concertId);
 
         // 이미 토큰이 있는지 확인
-        Optional<QueueToken> findToken = queueTokenService.findToken(user.getId(), concert.getId());
+        Optional<QueueToken> findToken = queueTokenQueryService.findToken(user.getId(), concert.getId());
 
         if (findToken.isPresent()) { //토큰이 있을때
             QueueToken token = findToken.get();
@@ -39,7 +39,7 @@ public class ConcertQueueTokenFacade {
             return new QueueTokenDto(token.getQueueTokenId(), token.getUser().getId(), token.getConcert().getId(), token.getExpiresAt());
         }
         //없을때
-        QueueToken queueToken = queueTokenService.issueToken(user, concert);
+        QueueToken queueToken = queueTokenCommandService.issueToken(user, concert);
         return  new QueueTokenDto(queueToken.getQueueTokenId(), queueToken.getUser().getId(), queueToken.getConcert().getId(), queueToken.getExpiresAt());
 
     }
