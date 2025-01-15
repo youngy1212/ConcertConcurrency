@@ -11,7 +11,8 @@ import kr.hhplus.be.server.domain.payment.model.PaymentStatus;
 import kr.hhplus.be.server.domain.payment.service.PaymentCommandService;
 import kr.hhplus.be.server.domain.reservation.model.Reservation;
 import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
-import kr.hhplus.be.server.domain.reservation.service.ReservationService;
+import kr.hhplus.be.server.domain.reservation.service.ReservationCommandService;
+import kr.hhplus.be.server.domain.reservation.service.ReservationQueryService;
 import kr.hhplus.be.server.domain.user.model.User;
 import kr.hhplus.be.server.domain.user.service.UserService;
 import kr.hhplus.be.server.infrastructure.gateway.PaySystem;
@@ -26,7 +27,8 @@ public class PaymentFacade {
 
 
     //좌석 예약
-    private final ReservationService reservationService;
+    private final ReservationCommandService reservationCommandService;
+    private final ReservationQueryService reservationQueryService;
     private final ConcertQueryService concertQueryService;
     private final ConcertCommandService concertCommandService;
     private final UserService userService;
@@ -37,7 +39,7 @@ public class PaymentFacade {
     public ReservationDto completeReservation(Long userId, Long ConcertScheduleId, Long seatId, String tokenId, Long temporaryReservationId, String paymentData) {
 
         User user = userService.getUserById(userId);
-        TemporaryReservation temporaryReservation = reservationService.getTemporaryReservation(temporaryReservationId);
+        TemporaryReservation temporaryReservation = reservationQueryService.getTemporaryReservation(temporaryReservationId);
         ConcertSchedule concertSchedule = concertQueryService.getConcertSchedule(ConcertScheduleId);
         Seat seat = concertCommandService.findByIdLock(seatId);
 
@@ -57,7 +59,7 @@ public class PaymentFacade {
 
         //결제 성공시
         seat.book();
-        Reservation reservation = reservationService.createReservation(concertSchedule, user, seat);
+        Reservation reservation = reservationCommandService.createReservation(concertSchedule, user, seat);
         Payment payment = paymentCommandService.savePayment(user, reservation, seat.getPrice(), PaymentStatus.SUCCESS);
         return new ReservationDto(payment.getId(),reservation.getId(), reservation.getSeat().getSeatId());
 

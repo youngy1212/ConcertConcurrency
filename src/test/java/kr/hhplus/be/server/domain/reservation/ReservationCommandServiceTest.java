@@ -12,8 +12,8 @@ import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
 import kr.hhplus.be.server.domain.concert.model.Seat;
 import kr.hhplus.be.server.domain.reservation.model.Reservation;
 import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
-import kr.hhplus.be.server.domain.reservation.repository.ReservationStore;
-import kr.hhplus.be.server.domain.reservation.service.ReservationService;
+import kr.hhplus.be.server.domain.reservation.repository.ReservationCommand;
+import kr.hhplus.be.server.domain.reservation.service.ReservationCommandService;
 import kr.hhplus.be.server.domain.user.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,13 +23,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class ReservationServiceTest {
+class ReservationCommandServiceTest {
 
     @InjectMocks
-    ReservationService reservationService;
+    ReservationCommandService reservationCommandService;
 
     @Mock
-    private ReservationStore reservationStore;
+    private ReservationCommand reservationCommand;
 
     @DisplayName("임시예약을 생성합니다.")
     @Test
@@ -45,10 +45,10 @@ class ReservationServiceTest {
         TemporaryReservation temporaryReservation = TemporaryReservation.create(concertSchedule, user, seat, expiresAt,
                 queueToken);
 
-        when(reservationStore.temporaryReservationSave(any(TemporaryReservation.class))).thenReturn(temporaryReservation);
+        when(reservationCommand.temporaryReservationSave(any(TemporaryReservation.class))).thenReturn(temporaryReservation);
 
         // when
-        TemporaryReservation result = reservationService.createTemporaryReservation(concertSchedule,
+        TemporaryReservation result = reservationCommandService.createTemporaryReservation(concertSchedule,
                 user, seat, queueToken);
 
         // then
@@ -56,7 +56,7 @@ class ReservationServiceTest {
         assertEquals(result.getConcertSchedule().getConcertDate(), concertSchedule.getConcertDate());
         assertEquals(result.getSeat().getSeatNumber(), seat.getSeatNumber());
         assertEquals(result.getQueueTokenId(), queueToken);
-        verify(reservationStore).temporaryReservationSave(any(TemporaryReservation.class));
+        verify(reservationCommand).temporaryReservationSave(any(TemporaryReservation.class));
 
     }
 
@@ -73,16 +73,16 @@ class ReservationServiceTest {
 
         Reservation reservation = Reservation.create(concertSchedule, user, seat);
 
-        when(reservationStore.reservationSave(any(Reservation.class))).thenReturn(reservation);
+        when(reservationCommand.reservationSave(any(Reservation.class))).thenReturn(reservation);
 
         // when
-        Reservation result = reservationService.createReservation(concertSchedule, user, seat);
+        Reservation result = reservationCommandService.createReservation(concertSchedule, user, seat);
 
         // then
         assertEquals(result.getUser().getName(), user.getName());
         assertEquals(result.getConcertSchedule().getConcertDate(), concertSchedule.getConcertDate());
         assertEquals(result.getSeat().getSeatNumber(), seat.getSeatNumber());
-        verify(reservationStore).reservationSave(any(Reservation.class));
+        verify(reservationCommand).reservationSave(any(Reservation.class));
 
     }
 
