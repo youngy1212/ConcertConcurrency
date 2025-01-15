@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import kr.hhplus.be.server.api.concert.dto.ConcertDateResponse;
 import kr.hhplus.be.server.api.concert.dto.SeatResponse;
+import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.model.Concert;
 import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
 import kr.hhplus.be.server.domain.concert.repository.ConcertQuery;
@@ -27,7 +28,7 @@ public class ConcertQueryService {
         List<ConcertSchedule> schedules = concertQuery.findAllByConcertId(concertId);
 
         if(schedules.isEmpty()){
-            throw new NoSuchElementException("콘서트의 예약 가능한 날을 찾을 수 없습니다.");
+            throw new CustomException("콘서트의 예약 가능한 날을 찾을 수 없습니다.");
         }
 
         return schedules.stream().map(ConcertDateResponse::of)
