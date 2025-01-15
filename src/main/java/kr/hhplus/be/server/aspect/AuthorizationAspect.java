@@ -2,7 +2,7 @@ package kr.hhplus.be.server.aspect;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
-import kr.hhplus.be.server.domain.token.service.QueueTokenService;
+import kr.hhplus.be.server.domain.token.service.QueueTokenQueryService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -17,7 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class AuthorizationAspect {
 
     @Autowired
-    private QueueTokenService queueTokenService; // 토큰 검증을 위한 서비스
+    private QueueTokenQueryService queueTokenQueryService; // 토큰 검증을 위한 서비스
 
 
     @Pointcut("@annotation(kr.hhplus.be.server.annotation.AuthorizationHeader)")
@@ -36,7 +36,7 @@ public class AuthorizationAspect {
             throw new CustomException("잘못 된 경로입니다.");
         }
 
-        queueTokenService.authenticateToken(token); //인증
+        queueTokenQueryService.authenticateToken(token); //인증
 
     }
 

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import kr.hhplus.be.server.domain.token.model.QueueToken;
 import kr.hhplus.be.server.domain.token.model.QueueTokenStatus;
-import kr.hhplus.be.server.domain.token.repository.QueueTokenReader;
+import kr.hhplus.be.server.domain.token.repository.QueueTokenCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -15,14 +15,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class QueueTokenScheduled {
 
-
-    private final QueueTokenReader queueTokenReader;
+    private final QueueTokenCommand queueTokenCommand;
 
     @Transactional
     @Scheduled(fixedDelay = 1000) //1초 간격으로 실행
-    public void processActiveTokens(){
+    public void activeTokens(){
 
-        List<QueueToken> tokens = queueTokenReader.findTopNOrderByEnqueuedAt(QueueTokenStatus.PENDING, 10);
+        List<QueueToken> tokens = queueTokenCommand.findTopNOrderByEnqueuedAt(QueueTokenStatus.PENDING, 10);
 
         for(QueueToken token : tokens){
             token.tokenActive(LocalDateTime.now());
