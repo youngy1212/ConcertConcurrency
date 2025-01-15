@@ -1,7 +1,9 @@
 package kr.hhplus.be.server.api.user.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
 
+@Getter
 public class PointResponse {
 
     @Schema(description = "유저 Id")
