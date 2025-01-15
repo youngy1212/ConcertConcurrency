@@ -10,7 +10,7 @@ import kr.hhplus.be.server.domain.token.model.QueueToken;
 import kr.hhplus.be.server.domain.token.service.QueueTokenCommandService;
 import kr.hhplus.be.server.domain.token.service.QueueTokenQueryService;
 import kr.hhplus.be.server.domain.user.model.User;
-import kr.hhplus.be.server.domain.user.service.UserService;
+import kr.hhplus.be.server.domain.user.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ConcertQueueTokenFacade {
 
-    private final UserService userService;
+    private final UserQueryService userQueryService;
     private final ConcertQueryService concertQueryService;
     private final QueueTokenQueryService queueTokenQueryService;
     private final QueueTokenCommandService queueTokenCommandService;
@@ -27,7 +27,7 @@ public class ConcertQueueTokenFacade {
     @Transactional
     public QueueTokenDto issueQueueToken(long userId, long concertId) {
 
-        User user = userService.getUserById(userId);
+        User user = userQueryService.getUserById(userId);
         Concert concert = concertQueryService.getConcertById(concertId);
 
         // 이미 토큰이 있는지 확인

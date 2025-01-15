@@ -100,7 +100,7 @@ class ReservationFacadeTest {
         // when //then
         assertThatThrownBy(()-> reservationFacade.reserveTempSeat(userId, seat.getSeatId(),
                 concertSchedule.getId(), tokenId))
-                .isInstanceOf(CustomException.class)
+                .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("유저를 찾을 수 없습니다.");
 
     }

@@ -14,7 +14,7 @@ import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
 import kr.hhplus.be.server.domain.reservation.service.ReservationCommandService;
 import kr.hhplus.be.server.domain.reservation.service.ReservationQueryService;
 import kr.hhplus.be.server.domain.user.model.User;
-import kr.hhplus.be.server.domain.user.service.UserService;
+import kr.hhplus.be.server.domain.user.service.UserQueryService;
 import kr.hhplus.be.server.infrastructure.gateway.PaySystem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,14 +31,14 @@ public class PaymentFacade {
     private final ReservationQueryService reservationQueryService;
     private final ConcertQueryService concertQueryService;
     private final ConcertCommandService concertCommandService;
-    private final UserService userService;
+    private final UserQueryService userQueryService;
     private final PaymentCommandService paymentCommandService;
 
     //예약 완료
     @Transactional
     public ReservationDto completeReservation(Long userId, Long ConcertScheduleId, Long seatId, String tokenId, Long temporaryReservationId, String paymentData) {
 
-        User user = userService.getUserById(userId);
+        User user = userQueryService.getUserById(userId);
         TemporaryReservation temporaryReservation = reservationQueryService.getTemporaryReservation(temporaryReservationId);
         ConcertSchedule concertSchedule = concertQueryService.getConcertSchedule(ConcertScheduleId);
         Seat seat = concertCommandService.findByIdLock(seatId);

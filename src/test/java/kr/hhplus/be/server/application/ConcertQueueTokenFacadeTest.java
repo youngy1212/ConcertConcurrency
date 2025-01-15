@@ -5,7 +5,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.NoSuchElementException;
 import kr.hhplus.be.server.application.dto.QueueTokenDto;
-import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.model.Concert;
 import kr.hhplus.be.server.domain.user.model.User;
 import kr.hhplus.be.server.infrastructure.concert.ConcertJpaRepository;
@@ -72,7 +71,7 @@ class ConcertQueueTokenFacadeTest {
 
         // when //then
         assertThatThrownBy(()-> concertQueueTokenFacade.issueQueueToken(userId,SaveConcert.getId()))
-                .isInstanceOf(CustomException.class)
+                .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("유저를 찾을 수 없습니다.");
 
     }
