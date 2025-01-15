@@ -8,16 +8,14 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import kr.hhplus.be.server.api.concert.dto.ConcertDateResponse;
 import kr.hhplus.be.server.api.concert.dto.SeatResponse;
-import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.model.Concert;
 import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
-import kr.hhplus.be.server.domain.concert.model.Seat;
-import kr.hhplus.be.server.domain.concert.model.SeatStatus;
-import kr.hhplus.be.server.domain.concert.repository.ConcertReader;
-import kr.hhplus.be.server.domain.concert.service.ConcertService;
+import kr.hhplus.be.server.domain.concert.repository.ConcertQuery;
+import kr.hhplus.be.server.domain.concert.service.ConcertQueryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,13 +24,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class ConcertServiceTest {
+class ConcertQueryServiceTest {
 
     @Mock
-    ConcertReader concertReader;
+    ConcertQuery concertQuery;
 
     @InjectMocks
-    ConcertService concertService;
+    ConcertQueryService concertQueryService;
 
     @DisplayName("공연 정보가 없어서 오류 발생")
     @Test
@@ -41,10 +39,10 @@ class ConcertServiceTest {
         long concertId = 1L;
 
         //  when && then
-        when(concertReader.findById(concertId)).thenReturn(Optional.empty());
+        when(concertQuery.findById(concertId)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(()-> concertService.getConcertById(concertId))
-                .isInstanceOf(CustomException.class)
+        assertThatThrownBy(()-> concertQueryService.getConcertById(concertId))
+                .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("콘서트를 찾을 수 없습니다.");
 
     }
@@ -54,11 +52,11 @@ class ConcertServiceTest {
     void ConcertScheduleNotFound() {
         // given
         long concertId = 1L;
-        when(concertReader.findAllByConcertId(concertId)).thenReturn(Collections.emptyList());
+        when(concertQuery.findAllByConcertId(concertId)).thenReturn(Collections.emptyList());
 
         // when // then
-        assertThatThrownBy(()-> concertService.getAllConcertSchedule(concertId))
-                .isInstanceOf(CustomException.class)
+        assertThatThrownBy(()-> concertQueryService.getAllConcertSchedule(concertId))
+                .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("콘서트의 예약 가능한 날을 찾을 수 없습니다.");
 
     }
@@ -73,10 +71,10 @@ class ConcertServiceTest {
         ConcertSchedule concertSchedule2 = ConcertSchedule.create(concert,LocalDateTime.of(2024,12,13,8,50));
 
         List<ConcertSchedule> schedules = List.of(concertSchedule, concertSchedule2);
-        when(concertReader.findAllByConcertId(concertId)).thenReturn(schedules);
+        when(concertQuery.findAllByConcertId(concertId)).thenReturn(schedules);
 
         // when
-        List<ConcertDateResponse> result = concertService.getAllConcertSchedule(concertId);
+        List<ConcertDateResponse> result = concertQueryService.getAllConcertSchedule(concertId);
 
         // then
         assertThat(result.get(0).getConcertDate())
@@ -92,11 +90,11 @@ class ConcertServiceTest {
     void ConcertSeatNotFound() {
         // given
         long concertScheduleId = 3L;
-        when(concertReader.findByConcertScheduleId(concertScheduleId)).thenReturn(Collections.emptyList());
+        when(concertQuery.findByConcertScheduleId(concertScheduleId)).thenReturn(Collections.emptyList());
 
         // when // then
-        assertThatThrownBy(()-> concertService.getConcertSeats(concertScheduleId))
-                .isInstanceOf(CustomException.class)
+        assertThatThrownBy(()-> concertQueryService.getConcertSeats(concertScheduleId))
+                .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("콘서트의 좌석을 찾을 수 없습니다.");
 
     }
@@ -107,10 +105,10 @@ class ConcertServiceTest {
         // given
         long concertScheduleId = 3L;
         List<Long> seatIds = List.of(1L, 2L);
-        when(concertReader.findByConcertScheduleId(concertScheduleId)).thenReturn(seatIds);
+        when(concertQuery.findByConcertScheduleId(concertScheduleId)).thenReturn(seatIds);
 
         // when
-        SeatResponse seatResponse = concertService.getConcertSeats(concertScheduleId);
+        SeatResponse seatResponse = concertQueryService.getConcertSeats(concertScheduleId);
         //then
         assertThat(seatResponse.getSeat_ids()).hasSize(2);
         assertThat(seatResponse.getSeat_ids()).containsExactly(1L, 2L);
@@ -118,22 +116,7 @@ class ConcertServiceTest {
     }
 
 
-    @DisplayName("콘서트 좌석을 찾아 Seat 반환")
-    @Test
-    void seatSuccess() {
-        // given
-        long seatId = 3L;
-        Concert concert = Concert.create("콘서트", "고척돔");
-        ConcertSchedule concertSchedule = ConcertSchedule.create(concert, LocalDateTime.of(2024, 12, 12, 8, 50));
-        Seat seat = Seat.create(20, SeatStatus.AVAILABLE, 2000L, concertSchedule);
-        when(concertReader.findByIdLock(seatId)).thenReturn(Optional.empty());
 
-        // when // then
-        assertThatThrownBy(()-> concertService.findByIdLock(seatId))
-                .isInstanceOf(CustomException.class)
-                .hasMessage("콘서트의 좌석을 찾을 수 없습니다.");
-
-    }
 
 
 }

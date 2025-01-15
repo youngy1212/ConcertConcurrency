@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import kr.hhplus.be.server.application.dto.QueueTokenDto;
 import kr.hhplus.be.server.domain.concert.model.Concert;
-import kr.hhplus.be.server.domain.concert.service.ConcertService;
+import kr.hhplus.be.server.domain.concert.service.ConcertCommandService;
+import kr.hhplus.be.server.domain.concert.service.ConcertQueryService;
 import kr.hhplus.be.server.domain.token.model.QueueToken;
 import kr.hhplus.be.server.domain.token.service.QueueTokenService;
 import kr.hhplus.be.server.domain.user.model.User;
@@ -18,7 +19,8 @@ import org.springframework.stereotype.Service;
 public class ConcertQueueTokenFacade {
 
     private final UserService userService;
-    private final ConcertService concertService;
+    private final ConcertCommandService concertCommandService;
+    private final ConcertQueryService concertQueryService;
     private final QueueTokenService queueTokenService;
 
     //토큰 생성
@@ -26,7 +28,7 @@ public class ConcertQueueTokenFacade {
     public QueueTokenDto issueQueueToken(long userId, long concertId) {
 
         User user = userService.getUserById(userId);
-        Concert concert = concertService.getConcertById(concertId);
+        Concert concert = concertQueryService.getConcertById(concertId);
 
         // 이미 토큰이 있는지 확인
         Optional<QueueToken> findToken = queueTokenService.findToken(user.getId(), concert.getId());

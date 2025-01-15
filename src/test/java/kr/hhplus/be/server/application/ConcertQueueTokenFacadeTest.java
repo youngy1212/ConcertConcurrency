@@ -3,6 +3,7 @@ package kr.hhplus.be.server.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import java.util.NoSuchElementException;
 import kr.hhplus.be.server.application.dto.QueueTokenDto;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.model.Concert;
@@ -57,7 +58,7 @@ class ConcertQueueTokenFacadeTest {
 
         // when //then
         assertThatThrownBy(()-> concertQueueTokenFacade.issueQueueToken(save.getId(),concertId))
-                .isInstanceOf(CustomException.class)
+                .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("콘서트를 찾을 수 없습니다.");
 
     }

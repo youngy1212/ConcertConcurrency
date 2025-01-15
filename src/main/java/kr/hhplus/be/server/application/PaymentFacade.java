@@ -4,7 +4,8 @@ import kr.hhplus.be.server.application.dto.ReservationDto;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
 import kr.hhplus.be.server.domain.concert.model.Seat;
-import kr.hhplus.be.server.domain.concert.service.ConcertService;
+import kr.hhplus.be.server.domain.concert.service.ConcertCommandService;
+import kr.hhplus.be.server.domain.concert.service.ConcertQueryService;
 import kr.hhplus.be.server.domain.payment.model.Payment;
 import kr.hhplus.be.server.domain.payment.model.PaymentStatus;
 import kr.hhplus.be.server.domain.payment.service.PaymentService;
@@ -26,7 +27,8 @@ public class PaymentFacade {
 
     //좌석 예약
     private final ReservationService reservationService;
-    private final ConcertService concertService;
+    private final ConcertQueryService concertQueryService;
+    private final ConcertCommandService concertCommandService;
     private final UserService userService;
     private final PaymentService paymentService;
 
@@ -36,8 +38,8 @@ public class PaymentFacade {
 
         User user = userService.getUserById(userId);
         TemporaryReservation temporaryReservation = reservationService.getTemporaryReservation(temporaryReservationId);
-        ConcertSchedule concertSchedule = concertService.getConcertSchedule(ConcertScheduleId);
-        Seat seat = concertService.findByIdLock(seatId);
+        ConcertSchedule concertSchedule = concertQueryService.getConcertSchedule(ConcertScheduleId);
+        Seat seat = concertCommandService.findByIdLock(seatId);
 
         if(!seat.getSeatId().equals(temporaryReservation.getSeat().getSeatId())){
             throw new CustomException(HttpStatus.CONFLICT, "예약 정보가 일치하지 않습니다.");
