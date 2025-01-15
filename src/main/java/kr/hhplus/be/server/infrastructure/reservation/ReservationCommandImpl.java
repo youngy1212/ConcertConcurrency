@@ -2,13 +2,13 @@ package kr.hhplus.be.server.infrastructure.reservation;
 
 import kr.hhplus.be.server.domain.reservation.model.Reservation;
 import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
-import kr.hhplus.be.server.domain.reservation.repository.ReservationStore;
+import kr.hhplus.be.server.domain.reservation.repository.ReservationCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ReservationStoreImpl implements ReservationStore {
+public class ReservationCommandImpl implements ReservationCommand {
 
     private final TemporaryReservationJpaRepository temporaryReservationJpaRepository;
     private final ReservationJpaRepository reservationJpaRepository;

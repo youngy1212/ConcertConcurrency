@@ -2,25 +2,21 @@ package kr.hhplus.be.server.domain.reservation.service;
 
 
 import java.time.LocalDateTime;
-import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
 import kr.hhplus.be.server.domain.concert.model.Seat;
 import kr.hhplus.be.server.domain.reservation.model.Reservation;
 import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
-import kr.hhplus.be.server.domain.reservation.repository.ReservationReader;
-import kr.hhplus.be.server.domain.reservation.repository.ReservationStore;
+import kr.hhplus.be.server.domain.reservation.repository.ReservationCommand;
 import kr.hhplus.be.server.domain.user.model.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ReservationService {
+public class ReservationCommandService {
 
-    private final ReservationStore reservationStore;
+    private final ReservationCommand reservationCommand;
 
-    private final ReservationReader reservationReader;
 
     public TemporaryReservation createTemporaryReservation(ConcertSchedule concertSchedule, User user, Seat seat, String queueTokenId) {
 
@@ -28,7 +24,7 @@ public class ReservationService {
         // 임시 예약 생성
         TemporaryReservation tempReservation = TemporaryReservation.create(concertSchedule, user, seat, time,queueTokenId);
 
-        return reservationStore.temporaryReservationSave(tempReservation);
+        return reservationCommand.temporaryReservationSave(tempReservation);
     }
 
 
@@ -38,13 +34,9 @@ public class ReservationService {
         //예약 생성
         Reservation reservation = Reservation.create(concertSchedule,user,seat);
 
-        return reservationStore.reservationSave(reservation);
+        return reservationCommand.reservationSave(reservation);
 
     }
 
-    public TemporaryReservation getTemporaryReservation(Long reservationId) {
-       return reservationReader.getTemporaryReservation(reservationId).orElseThrow(() -> new CustomException(
-                HttpStatus.NOT_FOUND,"잘못된 결제 요청입니다."));
 
-    }
 }
