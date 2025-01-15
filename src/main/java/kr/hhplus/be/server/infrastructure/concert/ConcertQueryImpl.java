@@ -4,14 +4,13 @@ import java.util.List;
 import java.util.Optional;
 import kr.hhplus.be.server.domain.concert.model.Concert;
 import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
-import kr.hhplus.be.server.domain.concert.model.Seat;
-import kr.hhplus.be.server.domain.concert.repository.ConcertReader;
+import kr.hhplus.be.server.domain.concert.repository.ConcertQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ConcertReadImpl implements ConcertReader {
+public class ConcertQueryImpl implements ConcertQuery {
 
     private final ConcertJpaRepository concertJpaRepository;
     private final ConcertScheduleJpaRepository concertScheduleJpaRepository;
@@ -30,11 +29,6 @@ public class ConcertReadImpl implements ConcertReader {
     @Override
     public List<Long> findByConcertScheduleId(long concertScheduleId) {
         return seatJpaRepository.findByConcertScheduleId(concertScheduleId);
-    }
-
-    @Override
-    public Optional<Seat> findByIdLock(long seatId) {
-        return seatJpaRepository.findByIdLock(seatId);
     }
 
     @Override

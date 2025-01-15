@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import kr.hhplus.be.server.application.dto.ReservationDto;
 import kr.hhplus.be.server.application.dto.TempReservationDto;
 import kr.hhplus.be.server.domain.common.exception.CustomException;
@@ -120,7 +121,7 @@ class ReservationFacadeTest {
         // when //then
         assertThatThrownBy(()-> reservationFacade.reserveTempSeat(saveUse.getId(), seat.getSeatId(),
                 ConcertSchedule, tokenId))
-                .isInstanceOf(CustomException.class)
+                .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("콘서트 일정을 찾을 수 없습니다.");
 
     }
