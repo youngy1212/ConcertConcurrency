@@ -8,7 +8,7 @@ import kr.hhplus.be.server.domain.concert.service.ConcertCommandService;
 import kr.hhplus.be.server.domain.concert.service.ConcertQueryService;
 import kr.hhplus.be.server.domain.payment.model.Payment;
 import kr.hhplus.be.server.domain.payment.model.PaymentStatus;
-import kr.hhplus.be.server.domain.payment.service.PaymentService;
+import kr.hhplus.be.server.domain.payment.service.PaymentCommandService;
 import kr.hhplus.be.server.domain.reservation.model.Reservation;
 import kr.hhplus.be.server.domain.reservation.model.TemporaryReservation;
 import kr.hhplus.be.server.domain.reservation.service.ReservationService;
@@ -30,7 +30,7 @@ public class PaymentFacade {
     private final ConcertQueryService concertQueryService;
     private final ConcertCommandService concertCommandService;
     private final UserService userService;
-    private final PaymentService paymentService;
+    private final PaymentCommandService paymentCommandService;
 
     //예약 완료
     @Transactional
@@ -58,7 +58,7 @@ public class PaymentFacade {
         //결제 성공시
         seat.book();
         Reservation reservation = reservationService.createReservation(concertSchedule, user, seat);
-        Payment payment = paymentService.savePayment(user, reservation, seat.getPrice(), PaymentStatus.SUCCESS);
+        Payment payment = paymentCommandService.savePayment(user, reservation, seat.getPrice(), PaymentStatus.SUCCESS);
         return new ReservationDto(payment.getId(),reservation.getId(), reservation.getSeat().getSeatId());
 
 

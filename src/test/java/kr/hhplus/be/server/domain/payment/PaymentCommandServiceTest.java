@@ -12,8 +12,8 @@ import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
 import kr.hhplus.be.server.domain.concert.model.Seat;
 import kr.hhplus.be.server.domain.payment.model.Payment;
 import kr.hhplus.be.server.domain.payment.model.PaymentStatus;
-import kr.hhplus.be.server.domain.payment.repository.PaymentStore;
-import kr.hhplus.be.server.domain.payment.service.PaymentService;
+import kr.hhplus.be.server.domain.payment.repository.PaymentCommand;
+import kr.hhplus.be.server.domain.payment.service.PaymentCommandService;
 import kr.hhplus.be.server.domain.reservation.model.Reservation;
 import kr.hhplus.be.server.domain.user.model.User;
 import org.junit.jupiter.api.DisplayName;
@@ -24,13 +24,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class PaymentServiceTest {
+class PaymentCommandServiceTest {
 
     @Mock
-    private PaymentStore paymentStore;
+    private PaymentCommand paymentCommand;
 
     @InjectMocks
-    private PaymentService paymentService;
+    private PaymentCommandService paymentCommandService;
 
     @DisplayName("결제 정보를 생성합니다.")
     @Test
@@ -44,16 +44,16 @@ class PaymentServiceTest {
 
         Payment payment = Payment.create(user, reservation, 10000L, PaymentStatus.SUCCESS);
 
-        when(paymentStore.savePayment(any(Payment.class))).thenReturn(payment);
+        when(paymentCommand.save(any(Payment.class))).thenReturn(payment);
 
         // when
-        Payment result = paymentService.savePayment(user, reservation,10000L, PaymentStatus.SUCCESS);
+        Payment result = paymentCommandService.savePayment(user, reservation,10000L, PaymentStatus.SUCCESS);
 
         // then
         assertEquals(result.getUser().getName(), user.getName());
         assertEquals(result.getAmount(), 10000L);
         assertEquals(result.getStatus(),  PaymentStatus.SUCCESS);
-        verify(paymentStore).savePayment(any(Payment.class));
+        verify(paymentCommand).save(any(Payment.class));
 
     }
 
