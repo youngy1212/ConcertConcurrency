@@ -90,8 +90,7 @@ public class HttpLogMessage {
     private static String getResponseBody(ContentCachingResponseWrapper response) throws IOException {
         byte[] buf = response.getContentAsByteArray();
         if (buf.length > 0) {
-            String payload = new String(buf, 0, buf.length, StandardCharsets.UTF_8);
-            return payload.replaceAll("\\n", "");
+            return new String(buf, StandardCharsets.UTF_8).replaceAll("\\s+", " ");
         }
         return "";
     }
