@@ -8,17 +8,17 @@ import lombok.Getter;
 public class TempReservationResponse {
 
     @Schema(description = "임시 예약 ID")
-    private Long temp_reservation_id;
+    private Long tempReservationId;
 
     @Schema(description = "임시 예약 만료 시간")
-    private LocalDateTime expires_at;
+    private LocalDateTime expiresAt;
 
-    private TempReservationResponse(Long temp_reservation_id, LocalDateTime expires_at) {
-        this.temp_reservation_id = temp_reservation_id;
-        this.expires_at = expires_at;
+    private TempReservationResponse(Long tempReservationId, LocalDateTime expiresAt) {
+        this.tempReservationId = tempReservationId;
+        this.expiresAt = expiresAt;
     }
 
-    public static TempReservationResponse of(Long temp_reservation_id, LocalDateTime expires_at) {
-        return new TempReservationResponse(temp_reservation_id, expires_at);
+    public static TempReservationResponse of(Long tempReservationId, LocalDateTime expiresAt) {
+        return new TempReservationResponse(tempReservationId, expiresAt);
     }
 }
