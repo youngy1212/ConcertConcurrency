@@ -6,6 +6,8 @@ import kr.hhplus.be.server.api.concert.dto.ConcertDateResponse;
 import kr.hhplus.be.server.api.concert.dto.SeatResponse;
 import kr.hhplus.be.server.api.concert.dto.SwaggerConcertController;
 import kr.hhplus.be.server.domain.concert.service.ConcertQueryService;
+import kr.hhplus.be.server.domain.concert.service.dto.ConcertDateDto;
+import kr.hhplus.be.server.domain.concert.service.dto.SeatDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,11 @@ public class ConcertController implements SwaggerConcertController {
     @GetMapping("/concert/date/{concertId}")
     public ResponseEntity<List<ConcertDateResponse>> getConcertDates(
             @PathVariable Long concertId){
-        return ResponseEntity.ok(concertQueryService.getAllConcertSchedule(concertId));
+        ConcertDateDto concertSchedule = concertQueryService.getAllConcertSchedule(concertId);
+        List<ConcertDateResponse> responseList = concertSchedule.concertSchedules().stream()
+                .map(ConcertDateResponse::of)
+                .toList();
+        return ResponseEntity.ok(responseList);
     }
 
     @AuthorizationHeader
@@ -30,7 +36,8 @@ public class ConcertController implements SwaggerConcertController {
     public ResponseEntity<SeatResponse> getConcertSeats(
             @PathVariable Long concertScheduleId
     ){
-        return ResponseEntity.ok(concertQueryService.getConcertSeats(concertScheduleId));
+        SeatDto concertSeats = concertQueryService.getConcertSeats(concertScheduleId);
+        return ResponseEntity.ok(SeatResponse.of(concertSeats.seat_ids()));
     }
 
 }
