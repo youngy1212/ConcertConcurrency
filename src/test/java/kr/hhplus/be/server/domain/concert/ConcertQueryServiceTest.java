@@ -112,8 +112,8 @@ class ConcertQueryServiceTest {
         SeatDto concertSeats = concertQueryService.getConcertSeats(concertScheduleId);
 
         //then
-        assertThat(concertSeats.seat_ids()).hasSize(2);
-        assertThat(concertSeats.seat_ids()).containsExactly(1L, 2L);
+        assertThat(concertSeats.seatIds()).hasSize(2);
+        assertThat(concertSeats.seatIds()).containsExactly(1L, 2L);
 
     }
 

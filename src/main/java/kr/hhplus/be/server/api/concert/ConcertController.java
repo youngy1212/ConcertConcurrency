@@ -37,7 +37,7 @@ public class ConcertController implements SwaggerConcertController {
             @PathVariable Long concertScheduleId
     ){
         SeatDto concertSeats = concertQueryService.getConcertSeats(concertScheduleId);
-        return ResponseEntity.ok(SeatResponse.of(concertSeats.seat_ids()));
+        return ResponseEntity.ok(SeatResponse.of(concertSeats.seatIds()));
     }
 
 }
