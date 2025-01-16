@@ -10,12 +10,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import kr.hhplus.be.server.api.concert.dto.ConcertDateResponse;
-import kr.hhplus.be.server.api.concert.dto.SeatResponse;
+import kr.hhplus.be.server.domain.common.exception.CustomException;
 import kr.hhplus.be.server.domain.concert.model.Concert;
 import kr.hhplus.be.server.domain.concert.model.ConcertSchedule;
 import kr.hhplus.be.server.domain.concert.repository.ConcertQuery;
 import kr.hhplus.be.server.domain.concert.service.ConcertQueryService;
+import kr.hhplus.be.server.domain.concert.service.dto.ConcertDateDto;
+import kr.hhplus.be.server.domain.concert.service.dto.SeatDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,12 +57,12 @@ class ConcertQueryServiceTest {
 
         // when // then
         assertThatThrownBy(()-> concertQueryService.getAllConcertSchedule(concertId))
-                .isInstanceOf(NoSuchElementException.class)
+                .isInstanceOf(CustomException.class)
                 .hasMessage("콘서트의 예약 가능한 날을 찾을 수 없습니다.");
 
     }
 
-    @DisplayName("콘서트 스케줄을 찾아서 List<ConcertDateResponse>로 반환")
+    @DisplayName("콘서트 스케줄을 찾아서 ConcertDateDto 반환")
     @Test
     void ConcertScheduleSuccess() {
         // given
@@ -74,12 +75,12 @@ class ConcertQueryServiceTest {
         when(concertQuery.findAllByConcertId(concertId)).thenReturn(schedules);
 
         // when
-        List<ConcertDateResponse> result = concertQueryService.getAllConcertSchedule(concertId);
+        ConcertDateDto concertDateDto = concertQueryService.getAllConcertSchedule(concertId);
 
         // then
-        assertThat(result.get(0).getConcertDate())
+        assertThat(concertDateDto.concertSchedules().get(0).getConcertDate())
                 .isEqualTo(LocalDateTime.of(2024, 12, 12, 8, 50));
-        assertThat(result.get(1).getConcertDate())
+        assertThat(concertDateDto.concertSchedules().get(1).getConcertDate())
                 .isEqualTo(LocalDateTime.of(2024, 12, 13, 8, 50));
 
 
@@ -108,10 +109,11 @@ class ConcertQueryServiceTest {
         when(concertQuery.findByConcertScheduleId(concertScheduleId)).thenReturn(seatIds);
 
         // when
-        SeatResponse seatResponse = concertQueryService.getConcertSeats(concertScheduleId);
+        SeatDto concertSeats = concertQueryService.getConcertSeats(concertScheduleId);
+
         //then
-        assertThat(seatResponse.getSeat_ids()).hasSize(2);
-        assertThat(seatResponse.getSeat_ids()).containsExactly(1L, 2L);
+        assertThat(concertSeats.seat_ids()).hasSize(2);
+        assertThat(concertSeats.seat_ids()).containsExactly(1L, 2L);
 
     }
 
